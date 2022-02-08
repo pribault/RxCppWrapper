@@ -1,0 +1,168 @@
+/*
+ * MIT License
+ * 
+ * Copyright (c) 2022 paul ribault
+ * 
+ * Permission is hereby granted, free of charge, to any person obtaining a copy
+ * of this software and associated documentation files (the "Software"), to deal
+ * in the Software without restriction, including without limitation the rights
+ * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+ * copies of the Software, and to permit persons to whom the Software is
+ * furnished to do so, subject to the following conditions:
+ * 
+ * The above copyright notice and this permission notice shall be included in all
+ * copies or substantial portions of the Software.
+ * 
+ * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+ * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+ * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+ * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+ * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+ * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+ * SOFTWARE.
+ * 
+ * File: Completable.cpp
+ * Created: 8th February 2022 12:11:52 pm
+ * Author: Paul Ribault (pribault.dev@gmail.com)
+ * 
+ * Last Modified: 8th February 2022 12:15:02 pm
+ * Modified By: Paul Ribault (pribault.dev@gmail.com)
+ */
+
+#include "Completable.h"
+
+/*
+**************
+** includes **
+**************
+*/
+
+/*
+****************
+** namespaces **
+****************
+*/
+
+using namespace RxCW;
+
+/*
+********************************************************************************
+************************************ METHODS ***********************************
+********************************************************************************
+*/
+
+Completable::Completable(const rxcpp::observable<int>& observable) :
+	_observable(new rxcpp::observable<int>(observable))
+{
+}
+
+Completable::Completable(void)
+{
+}
+
+Completable::~Completable(void)
+{
+}
+
+Completable	Completable::create(const Handler& handler)
+{
+	return Completable(rxcpp::observable<>::create<int>(
+		[handler](rxcpp::subscriber<int> subscriber)
+		{
+			handler(
+				[subscriber]()
+				{
+					subscriber.on_completed();
+				},
+				[subscriber](std::exception_ptr error)
+				{
+					subscriber.on_error(error);
+				}
+			);
+		}
+	));
+}
+
+Completable	Completable::defer(const std::function<Completable()>& function)
+{
+	return Completable(rxcpp::observable<>::defer(
+		[function]()
+		{
+			return *function()._observable;
+		}
+	));
+}
+
+Completable		Completable::complete()
+{
+	return Completable(rxcpp::observable<>::empty<int>());
+}
+
+Completable		Completable::error(std::exception_ptr error)
+{
+	return Completable(rxcpp::observable<>::error<int>(error));
+}
+
+Completable		Completable::andThen(Completable& other)
+{
+	return Completable(_observable->merge(*other._observable));
+}
+
+Completable		Completable::doOnSuccess(const SuccessFunction& onSuccess)
+{
+	return Completable(_observable->tap(
+		[](int){
+			// 
+		},
+		[onSuccess]()
+		{
+			onSuccess();
+		}
+	));
+}
+
+Completable		Completable::doOnError(const ErrorFunction& onError)
+{
+	return Completable(_observable->tap(
+		[onError](std::exception_ptr e)
+		{
+			onError(e);
+		}
+	));
+}
+
+Completable		Completable::doOnComplete(const CompleteFunction& onComplete)
+{
+	return Completable(_observable->tap(
+		[](int)
+		{
+		},
+		[onComplete](std::exception_ptr e)
+		{
+			onComplete();
+		},
+		[onComplete]()
+		{
+			onComplete();
+		}
+	));
+}
+
+void			Completable::subscribe(const SuccessFunction& onSuccess, const ErrorFunction& onError, const CompleteFunction& onComplete)
+{
+	_observable->subscribe(
+		[](int)
+		{
+		},
+		[onError, onComplete](std::exception_ptr e)
+		{
+			onError(e);
+			onComplete();
+		},
+		[onSuccess, onComplete]()
+		{
+			onSuccess();
+			onComplete();
+		}
+	);
+}
