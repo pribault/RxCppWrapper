@@ -3,15 +3,15 @@ cmake_minimum_required(VERSION 3.8)
 project(RxCppWrapper CXX)
 
 # Options
-set(ENABLE_DYNAMIC_LINK True)
+set(ENABLE_DYNAMIC_LINK False)
 
-# Set variables
-set(RXCW_OUTPUT_DIR ${CMAKE_BINARY_DIR}/bin)
-set(RXCW_INCLUDE_DIR ${CMAKE_CURRENT_SOURCE_DIR}/include)
-set(RXCW_SOURCE_DIR ${CMAKE_CURRENT_SOURCE_DIR}/src)
-set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${RXCW_OUTPUT_DIR})
-set(CMAKE_LIBRARY_OUTPUT_DIRECTORY ${RXCW_OUTPUT_DIR})
-set(CMAKE_ARCHIVE_OUTPUT_DIRECTORY ${RXCW_OUTPUT_DIR})
+# Load common cmake
+include(${PROJECT_SOURCE_DIR}/cmake/RxCWCommon.cmake)
+
+# Set environment
+rxcw_set_env()
+
+add_subdirectory(examples)
 
 # Find required packages
 find_package(rxcpp CONFIG REQUIRED)
@@ -34,5 +34,10 @@ if(ENABLE_DYNAMIC_LINK)
 else()
 	add_library(RxCW STATIC ${SOURCES})
 endif()
+
+set_target_properties(RxCW
+	PROPERTIES
+	RUNTIME_OUTPUT_DIRECTORY ${RXCW_OUTPUT_DIR}
+)
 
 target_link_libraries(RxCW PRIVATE rxcpp)

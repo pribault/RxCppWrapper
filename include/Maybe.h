@@ -21,11 +21,11 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  * 
- * File: Completable.h
- * Created: 8th February 2022 12:11:45 pm
+ * File: Maybe.h
+ * Created: 8th February 2022 2:24:15 pm
  * Author: Paul Ribault (pribault.dev@gmail.com)
  * 
- * Last Modified: 8th February 2022 12:15:22 pm
+ * Last Modified: 8th February 2022 2:24:35 pm
  * Modified By: Paul Ribault (pribault.dev@gmail.com)
  */
 
@@ -41,6 +41,18 @@
 #include <rx-observable.hpp>
 
 /*
+****************
+** class used **
+****************
+*/
+
+namespace	RxCW
+{
+	template	<typename T>
+	class		Single;
+}
+
+/*
 **********************
 ** class definition **
 **********************
@@ -48,7 +60,8 @@
 
 namespace	RxCW
 {
-	class	Completable
+	template	<typename T>
+	class	Maybe
 	{
 
 		/*
@@ -59,16 +72,19 @@ namespace	RxCW
 
 		public:
 
+			template<typename> friend class	Maybe;
+			template<typename> friend class	Single;
+
 			/*
 			***********
 			** types **
 			***********
 			*/
 
-			typedef std::function<void()>								SuccessFunction;
-			typedef std::function<void(std::exception_ptr)>			ErrorFunction;
-			typedef std::function<void()>								CompleteFunction;
-			typedef std::function<void(SuccessFunction, ErrorFunction)>	Handler;
+			typedef std::function<void(T)>													SuccessFunction;
+			typedef std::function<void(std::exception_ptr)>									ErrorFunction;
+			typedef std::function<void()>													CompleteFunction;
+			typedef std::function<void(SuccessFunction, CompleteFunction, ErrorFunction)>	Handler;
 
 			/*
 			*************
@@ -79,18 +95,26 @@ namespace	RxCW
 			/**
 			 * Destructor
 			 */
-			~Completable(void);
+			~Maybe(void);
 
-			static Completable	create(const Handler& handler);
-			static Completable	defer(const std::function<Completable()>& function);
-			static Completable	complete();
-			static Completable	error(std::exception_ptr e);
+			static Maybe<T>	create(const Handler& handler);
+			static Maybe<T>	defer(const std::function<Maybe<T>()>& function);
+			static Maybe<T>	just(const T& value);
+			static Maybe<T>	error(std::exception_ptr e);
+			static Maybe<T>	empty();
 
-			Completable		andThen(Completable& other);
-			Completable		doOnSuccess(const SuccessFunction& onSuccess);
-			Completable		doOnError(const ErrorFunction& onError);
-			Completable		doOnComplete(const CompleteFunction& onComplete);
+			Maybe<T>		andThen(Maybe<T>& other);
+			Maybe<T>		doOnSuccess(const SuccessFunction& onSuccess);
+			Maybe<T>		doOnError(const ErrorFunction& onError);
+			Maybe<T>		doOnComplete(const CompleteFunction& onComplete);
+			Single<bool>	isEmpty();
+			Maybe<T>		switchIfEmpty(Maybe<T>& other);
 			void			subscribe(const SuccessFunction& onSuccess, const ErrorFunction& onError, const CompleteFunction& onComplete);
+
+			template	<typename R>
+			Maybe<R>		map(const std::function<R(T)>& function);
+			template	<typename R>
+			Maybe<R>		flatMap(const std::function<Maybe<R>(T)>& function);
 
 		/*
 		************************************************************************
@@ -101,12 +125,23 @@ namespace	RxCW
 		protected:
 
 			/*
+			*************
+			** methods **
+			*************
+			*/
+
+			/**
+			 * Constructor
+			 */
+			Maybe(const rxcpp::observable<T>& observable);
+
+			/*
 			****************
 			** attributes **
 			****************
 			*/
 
-			std::shared_ptr<rxcpp::observable<int>>	_observable;
+			std::shared_ptr<rxcpp::observable<T>>	_observable;
 
 		/*
 		************************************************************************
@@ -125,12 +160,9 @@ namespace	RxCW
 			/**
 			 * Constructor
 			 */
-			Completable(const rxcpp::observable<int>& observable);
-
-			/**
-			 * Constructor
-			 */
-			Completable(void);
+			Maybe(void);
 
 	};
 }
+
+#include <Maybe.inl>
