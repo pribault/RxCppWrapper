@@ -109,6 +109,9 @@ namespace	RxCW
 			Maybe<T>		doOnComplete(const CompleteFunction& onComplete);
 			Single<bool>	isEmpty();
 			Maybe<T>		switchIfEmpty(Maybe<T>& other);
+			Single<T>		toSingle();
+			Maybe<T>		observeOn(rxcpp::observe_on_one_worker coordination);
+			Maybe<T>		subscribeOn(rxcpp::synchronize_in_one_worker coordination);
 			void			subscribe(const SuccessFunction& onSuccess, const ErrorFunction& onError, const CompleteFunction& onComplete);
 
 			template	<typename R>

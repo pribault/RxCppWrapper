@@ -35,6 +35,9 @@
 **************
 */
 
+#include <Completable.h>
+#include <Maybe.h>
+
 /*
 ********************************************************************************
 ************************************ METHODS ***********************************
@@ -153,6 +156,24 @@ template	<typename T>
 RxCW::Maybe<T>		RxCW::Single<T>::toMaybe()
 {
 	return Maybe<T>(*_observable);
+}
+
+template	<typename T>
+RxCW::Completable	RxCW::Single<T>::ignoreElement()
+{
+	return Completable(_observable->ignore_elements());
+}
+
+template	<typename T>
+RxCW::Single<T>		RxCW::Single<T>::observeOn(rxcpp::observe_on_one_worker coordination)
+{
+	return Single<T>(_observable->observe_on(coordination));
+}
+
+template	<typename T>
+RxCW::Single<T>		RxCW::Single<T>::subscribeOn(rxcpp::synchronize_in_one_worker coordination)
+{
+	return Single<T>(_observable->subscribe_on(coordination));
 }
 
 template	<typename T>

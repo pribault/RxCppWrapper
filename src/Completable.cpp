@@ -148,6 +148,16 @@ Completable		Completable::doOnComplete(const CompleteFunction& onComplete)
 	));
 }
 
+Completable		Completable::observeOn(rxcpp::observe_on_one_worker coordination)
+{
+	return Completable(_observable->observe_on(coordination));
+}
+
+Completable		Completable::subscribeOn(rxcpp::synchronize_in_one_worker coordination)
+{
+	return Completable(_observable->subscribe_on(coordination));
+}
+
 void			Completable::subscribe(const SuccessFunction& onSuccess, const ErrorFunction& onError, const CompleteFunction& onComplete)
 {
 	_observable->subscribe(

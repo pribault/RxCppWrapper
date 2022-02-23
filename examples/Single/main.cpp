@@ -55,11 +55,20 @@ using namespace RxCW;
 
 void	log(const std::string& pValue)
 {
-	std::cout << pValue << std::endl;
+	std::cout << "[thread " << std::this_thread::get_id() << "] " << pValue << std::endl;
 }
 
 int		main(int argc, char **argv)
 {
+	Single<int>::just(42)
+		.ignoreElement()
+		.subscribe([]() {
+			log("complete !");
+		}, [](const std::exception_ptr& e) {
+			log("error !");
+		}, []() {
+			log("terminate !");
+		});
 	Single<int>::just(42)
 		.map<float>([](int value) {
 			return 66.6666;
@@ -67,12 +76,16 @@ int		main(int argc, char **argv)
 		.flatMap<int>([](float value) {
 			return Single<int>::just(-12);
 		})
+		.subscribeOn(rxcpp::synchronize_new_thread())
 		.subscribe([](int value) {
 			log("value: " + std::to_string(value));
 		}, [](const std::exception_ptr& e) {
 			log("error !");
 		}, []() {
 			log("complete !");
+			exit(0);
 		});
+		while (true)
+			;
 	return 0;
 }

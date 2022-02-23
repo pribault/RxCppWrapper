@@ -48,6 +48,7 @@
 
 namespace	RxCW
 {
+	class		Completable;
 	template	<typename T>
 	class		Maybe;
 }
@@ -107,6 +108,9 @@ namespace	RxCW
 			Single<T>		doOnError(const ErrorFunction& onError);
 			Single<T>		doOnComplete(const CompleteFunction& onComplete);
 			Maybe<T>		toMaybe();
+			Completable		ignoreElement();
+			Single<T>		observeOn(rxcpp::observe_on_one_worker coordination);
+			Single<T>		subscribeOn(rxcpp::synchronize_in_one_worker coordination);
 			void			subscribe(const SuccessFunction& onSuccess, const ErrorFunction& onError, const CompleteFunction& onComplete);
 
 			template	<typename R>

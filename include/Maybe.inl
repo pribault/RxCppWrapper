@@ -171,6 +171,24 @@ RxCW::Maybe<T>		RxCW::Maybe<T>::switchIfEmpty(Maybe<T>& other)
 }
 
 template	<typename T>
+RxCW::Single<T>		RxCW::Maybe<T>::toSingle()
+{
+	return Single<T>(_observable->switch_if_empty(*Single<T>.error(std::make_exception_ptr(std::logic_error("empty Single")))._observable));
+}
+
+template	<typename T>
+RxCW::Maybe<T>		RxCW::Maybe<T>::observeOn(rxcpp::observe_on_one_worker coordination)
+{
+	return Maybe<T>(_observable->observe_on(coordination));
+}
+
+template	<typename T>
+RxCW::Maybe<T>		RxCW::Maybe<T>::subscribeOn(rxcpp::synchronize_in_one_worker coordination)
+{
+	return Maybe<T>(_observable->subscribe_on(coordination));
+}
+
+template	<typename T>
 void				RxCW::Maybe<T>::subscribe(const SuccessFunction& onSuccess, const ErrorFunction& onError, const CompleteFunction& onComplete)
 {
 	_observable->subscribe(

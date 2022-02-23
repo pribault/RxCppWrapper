@@ -59,6 +59,9 @@ namespace	RxCW
 
 		public:
 
+			template<typename> friend class	Maybe;
+			template<typename> friend class	Single;
+
 			/*
 			***********
 			** types **
@@ -66,7 +69,7 @@ namespace	RxCW
 			*/
 
 			typedef std::function<void()>								SuccessFunction;
-			typedef std::function<void(std::exception_ptr)>			ErrorFunction;
+			typedef std::function<void(std::exception_ptr)>				ErrorFunction;
 			typedef std::function<void()>								CompleteFunction;
 			typedef std::function<void(SuccessFunction, ErrorFunction)>	Handler;
 
@@ -90,6 +93,8 @@ namespace	RxCW
 			Completable		doOnSuccess(const SuccessFunction& onSuccess);
 			Completable		doOnError(const ErrorFunction& onError);
 			Completable		doOnComplete(const CompleteFunction& onComplete);
+			Completable		observeOn(rxcpp::observe_on_one_worker coordination);
+			Completable		subscribeOn(rxcpp::synchronize_in_one_worker coordination);
 			void			subscribe(const SuccessFunction& onSuccess, const ErrorFunction& onError, const CompleteFunction& onComplete);
 
 		/*
