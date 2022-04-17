@@ -98,6 +98,11 @@ Completable		Completable::complete()
 	return Completable(rxcpp::observable<>::empty<int>());
 }
 
+Completable		Completable::never()
+{
+	return Completable(rxcpp::observable<>::never<int>());
+}
+
 Completable		Completable::error(std::exception_ptr error)
 {
 	return Completable(rxcpp::observable<>::error<int>(error));

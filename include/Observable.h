@@ -21,11 +21,11 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  * 
- * File: Single.h
- * Created: 8th February 2022 2:24:10 pm
+ * File: Observable.h
+ * Created: Tuesday, 12th April 2022 9:24:34 am
  * Author: Paul Ribault (pribault.dev@gmail.com)
  * 
- * Last Modified: 8th February 2022 2:24:38 pm
+ * Last Modified: Tuesday, 12th April 2022 9:43:11 am
  * Modified By: Paul Ribault (pribault.dev@gmail.com)
  */
 
@@ -62,7 +62,7 @@ namespace	RxCW
 namespace	RxCW
 {
 	template	<typename T>
-	class	Single
+	class	Observable
 	{
 
 		/*
@@ -73,8 +73,7 @@ namespace	RxCW
 
 		public:
 
-			template<typename> friend class	Single;
-			template<typename> friend class	Maybe;
+			template<typename> friend class	Observable;
 
 			/*
 			***********
@@ -96,28 +95,32 @@ namespace	RxCW
 			/**
 			 * Destructor
 			 */
-			~Single(void);
+			~Observable(void);
 
-			static Single<T>	create(const Handler& handler);
-			static Single<T>	defer(const std::function<Single<T>()>& function);
-			static Single<T>	just(const T& value);
-			static Single<T>	error(std::exception_ptr e);
-			static Single<T>	never();
+			static Observable<T>	create(const Handler& handler);
+			static Observable<T>	defer(const std::function<Observable<T>()>& function);
+			static Observable<T>	empty();
+			static Observable<T>	never();
+			static Observable<T>	just(const T& value);
+			static Observable<T>	error(std::exception_ptr e);
+			static Observable<T>	range(T start, T end, std::ptrdiff_t step = 1);
+			static Observable<T>	interval(std::chrono::steady_clock::duration period);
+			static Observable<T>	interval(std::chrono::steady_clock::time_point when, std::chrono::steady_clock::duration period);
 
-			Single<T>		andThen(Single<T>& other);
-			Single<T>		doOnSuccess(const SuccessFunction& onSuccess);
-			Single<T>		doOnError(const ErrorFunction& onError);
-			Single<T>		doOnComplete(const CompleteFunction& onComplete);
-			Maybe<T>		toMaybe();
-			Completable		ignoreElement();
-			Single<T>		observeOn(rxcpp::observe_on_one_worker coordination);
-			Single<T>		subscribeOn(rxcpp::synchronize_in_one_worker coordination);
-			void			subscribe(const SuccessFunction& onSuccess, const ErrorFunction& onError, const CompleteFunction& onComplete);
+			Observable<T>		take(size_t count);
+			Observable<T>		take_last(size_t count);
+			Observable<T>		andThen(Observable<T>& other);
+			Observable<T>		doOnSuccess(const SuccessFunction& onSuccess);
+			Observable<T>		doOnError(const ErrorFunction& onError);
+			Observable<T>		doOnComplete(const CompleteFunction& onComplete);
+			Observable<T>		observeOn(rxcpp::observe_on_one_worker coordination);
+			Observable<T>		subscribeOn(rxcpp::synchronize_in_one_worker coordination);
+			void				subscribe(const SuccessFunction& onSuccess, const ErrorFunction& onError, const CompleteFunction& onComplete);
 
 			template	<typename R>
-			Single<R>		map(const std::function<R(T)>& function);
+			Observable<R>		map(const std::function<R(T)>& function);
 			template	<typename R>
-			Single<R>		flatMap(const std::function<Single<R>(T)>& function);
+			Observable<R>		flatMap(const std::function<Observable<R>(T)>& function);
 
 		/*
 		************************************************************************
@@ -136,7 +139,7 @@ namespace	RxCW
 			/**
 			 * Constructor
 			 */
-			Single(const rxcpp::observable<T>& observable);
+			Observable(const rxcpp::observable<T>& observable);
 
 			/*
 			****************
@@ -163,9 +166,9 @@ namespace	RxCW
 			/**
 			 * Constructor
 			 */
-			Single(void);
+			Observable(void);
 
 	};
 }
 
-#include <Single.inl>
+#include <Observable.inl>

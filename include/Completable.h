@@ -87,6 +87,7 @@ namespace	RxCW
 			static Completable	create(const Handler& handler);
 			static Completable	defer(const std::function<Completable()>& function);
 			static Completable	complete();
+			static Completable	never();
 			static Completable	error(std::exception_ptr e);
 
 			Completable		andThen(Completable& other);

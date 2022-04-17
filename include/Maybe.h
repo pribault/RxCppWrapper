@@ -102,6 +102,7 @@ namespace	RxCW
 			static Maybe<T>	just(const T& value);
 			static Maybe<T>	error(std::exception_ptr e);
 			static Maybe<T>	empty();
+			static Maybe<T>	never();
 
 			Maybe<T>		andThen(Maybe<T>& other);
 			Maybe<T>		doOnSuccess(const SuccessFunction& onSuccess);

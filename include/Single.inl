@@ -63,16 +63,23 @@ RxCW::Single<T>::~Single(void)
 template	<typename T>
 RxCW::Single<T>	RxCW::Single<T>::create(const Handler& handler)
 {
+	bool	gotValue = false;
+
 	return Single<T>(rxcpp::observable<>::create<T>(
 		[handler](rxcpp::subscriber<T> subscriber)
 	{
 		handler(
 			[subscriber](T value)
 		{
+			if (gotValue)
+				throw new std::exception("Single doesn't accept multiple values. Use Observable instead");
+			gotValue = true;
 			subscriber.on_next(value);
 		},
 			[subscriber]()
 		{
+			if (!gotValue)
+				throw new std::exception("Single with no value, use Maybe instead");
 			subscriber.on_completed();
 		},
 			[subscriber](std::exception_ptr error)
@@ -105,6 +112,12 @@ template	<typename T>
 RxCW::Single<T>	RxCW::Single<T>::error(std::exception_ptr e)
 {
 	return Single<T>(rxcpp::observable<>::error<T>(e));
+}
+
+template	<typename T>
+RxCW::Single<T>	RxCW::Single<T>::never()
+{
+	return Single<T>(rxcpp::observable<>::never<T>());
 }
 
 template	<typename T>
