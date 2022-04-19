@@ -125,12 +125,6 @@ RxCW::Maybe<T>	RxCW::Maybe<T>::never()
 }
 
 template	<typename T>
-RxCW::Maybe<T>		RxCW::Maybe<T>::andThen(RxCW::Maybe<T>& other)
-{
-	return Maybe<T>(_observable->merge(*other._observable));
-}
-
-template	<typename T>
 RxCW::Maybe<T>		RxCW::Maybe<T>::doOnSuccess(const SuccessFunction& onSuccess)
 {
 	return Maybe<T>(_observable->tap(

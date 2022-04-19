@@ -147,12 +147,6 @@ RxCW::Observable<T>		RxCW::Observable<T>::take_last(size_t count)
 }
 
 template	<typename T>
-RxCW::Observable<T>		RxCW::Observable<T>::andThen(RxCW::Observable<T>& other)
-{
-	return Observable<T>(_observable->merge(*other._observable));
-}
-
-template	<typename T>
 RxCW::Observable<T>		RxCW::Observable<T>::doOnSuccess(const SuccessFunction& onSuccess)
 {
 	return Observable<T>(_observable->tap(

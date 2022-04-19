@@ -104,7 +104,6 @@ namespace	RxCW
 			static Maybe<T>	empty();
 			static Maybe<T>	never();
 
-			Maybe<T>		andThen(Maybe<T>& other);
 			Maybe<T>		doOnSuccess(const SuccessFunction& onSuccess);
 			Maybe<T>		doOnError(const ErrorFunction& onError);
 			Maybe<T>		doOnComplete(const CompleteFunction& onComplete);

@@ -104,7 +104,6 @@ namespace	RxCW
 			static Single<T>	error(std::exception_ptr e);
 			static Single<T>	never();
 
-			Single<T>		andThen(Single<T>& other);
 			Single<T>		doOnSuccess(const SuccessFunction& onSuccess);
 			Single<T>		doOnError(const ErrorFunction& onError);
 			Single<T>		doOnComplete(const CompleteFunction& onComplete);

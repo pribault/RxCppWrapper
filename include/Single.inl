@@ -121,12 +121,6 @@ RxCW::Single<T>	RxCW::Single<T>::never()
 }
 
 template	<typename T>
-RxCW::Single<T>		RxCW::Single<T>::andThen(RxCW::Single<T>& other)
-{
-	return Single<T>(_observable->merge(*other._observable));
-}
-
-template	<typename T>
 RxCW::Single<T>		RxCW::Single<T>::doOnSuccess(const SuccessFunction& onSuccess)
 {
 	return Single<T>(_observable->tap(

@@ -109,7 +109,6 @@ namespace	RxCW
 
 			Observable<T>		take(size_t count);
 			Observable<T>		take_last(size_t count);
-			Observable<T>		andThen(Observable<T>& other);
 			Observable<T>		doOnSuccess(const SuccessFunction& onSuccess);
 			Observable<T>		doOnError(const ErrorFunction& onError);
 			Observable<T>		doOnComplete(const CompleteFunction& onComplete);
