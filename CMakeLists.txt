@@ -3,7 +3,9 @@ cmake_minimum_required(VERSION 3.8)
 project(RxCppWrapper CXX)
 
 # Options
-set(ENABLE_DYNAMIC_LINK False)
+if(NOT DEFINED ENABLE_DYNAMIC_LINK)
+	set(ENABLE_DYNAMIC_LINK False)
+endif()
 
 # Load common cmake
 include(${PROJECT_SOURCE_DIR}/cmake/RxCWCommon.cmake)
