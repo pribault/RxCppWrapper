@@ -68,10 +68,10 @@ namespace	RxCW
 			***********
 			*/
 
-			typedef std::function<void()>								SuccessFunction;
-			typedef std::function<void(std::exception_ptr)>				ErrorFunction;
-			typedef std::function<void()>								CompleteFunction;
-			typedef std::function<void(SuccessFunction, ErrorFunction)>	Handler;
+			typedef std::function<void(std::exception_ptr)>					ErrorFunction;
+			typedef std::function<void()>									CompleteFunction;
+			typedef std::function<void(CompleteFunction, ErrorFunction)>	Handler;
+			typedef std::function<bool()>									BooleanSupplier;
 
 			/*
 			*************
@@ -91,12 +91,17 @@ namespace	RxCW
 			static Completable	error(std::exception_ptr e);
 
 			Completable		andThen(Completable& other);
-			Completable		doOnSuccess(const SuccessFunction& onSuccess);
-			Completable		doOnError(const ErrorFunction& onError);
+			Completable		repeat();
+			Completable		repeat(size_t times);
+			Completable		repeatUntil(const BooleanSupplier& supplier);
 			Completable		doOnComplete(const CompleteFunction& onComplete);
+			Completable		doOnError(const ErrorFunction& onError);
 			Completable		observeOn(rxcpp::observe_on_one_worker coordination);
 			Completable		subscribeOn(rxcpp::synchronize_in_one_worker coordination);
-			void			subscribe(const SuccessFunction& onSuccess, const ErrorFunction& onError, const CompleteFunction& onComplete);
+			void			subscribe();
+			void			subscribe(const CompleteFunction& onComplete);
+			void			subscribe(const ErrorFunction& onError);
+			void			subscribe(const CompleteFunction& onComplete, const ErrorFunction& onError);
 
 		/*
 		************************************************************************

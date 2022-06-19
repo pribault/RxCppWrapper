@@ -65,11 +65,9 @@ void	test_completable_defer()
 		//return Completable::error(std::exception_ptr());
 	})
 		.subscribe([]() {
-			log("success !");
+			log("completed !");
 		}, [](std::exception_ptr e) {
 			log("error !");
-		}, []() {
-			log("completed !");
 		});
 	log("END\tCompletable defer test");
 	log("");
@@ -78,18 +76,16 @@ void	test_completable_defer()
 void	test_completable_create()
 {
 	log("START\tCompletable create test");
-	Completable::create([](Completable::SuccessFunction successFunction, Completable::ErrorFunction errorFunction)
+	Completable::create([](Completable::CompleteFunction onComplete, Completable::ErrorFunction onError)
 	{
 		log("creating Completable with create function");
-		successFunction();
+		onComplete();
 		//errorFunction(std::exception_ptr());
 	})
 		.subscribe([]() {
-			log("success !");
+			log("completed !");
 		}, [](std::exception_ptr e) {
 			log("error !");
-		}, []() {
-			log("completed !");
 		});
 	log("END\tCompletable create test");
 	log("");
@@ -108,11 +104,9 @@ void	test_completable_andThen()
 			//return Completable::error(std::exception_ptr());
 		}))
 		.subscribe([]() {
-			log("success !");
+			log("completed !");
 		}, [](std::exception_ptr e) {
 			log("error !");
-		}, []() {
-			log("completed !");
 		});
 	log("END\tCompletable andThen test");
 	log("");
@@ -126,9 +120,6 @@ void	test_completable_tap()
 		return Completable::complete();
 		//return Completable::error(std::exception_ptr());
 	})
-		.doOnSuccess([]() {
-			log("doOnSuccess");
-		})
 		.doOnError([](std::exception_ptr e) {
 			log("doOnError");
 		})
@@ -136,11 +127,9 @@ void	test_completable_tap()
 			log("doOnComplete");
 		})
 		.subscribe([]() {
-			log("success !");
+			log("completed !");
 		}, [](std::exception_ptr e) {
 			log("error !");
-		}, []() {
-			log("completed !");
 		});
 	log("END\tCompletable andThen test");
 	log("");

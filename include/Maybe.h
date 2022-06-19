@@ -72,6 +72,7 @@ namespace	RxCW
 
 		public:
 
+			friend class					Completable;
 			template<typename> friend class	Maybe;
 			template<typename> friend class	Single;
 
@@ -112,6 +113,11 @@ namespace	RxCW
 			Single<T>		toSingle();
 			Maybe<T>		observeOn(rxcpp::observe_on_one_worker coordination);
 			Maybe<T>		subscribeOn(rxcpp::synchronize_in_one_worker coordination);
+			void			subscribe();
+			void			subscribe(const SuccessFunction& onSuccess);
+			void			subscribe(const ErrorFunction& onError);
+			void			subscribe(const CompleteFunction& onComplete);
+			void			subscribe(const SuccessFunction& onSuccess, const ErrorFunction& onError);
 			void			subscribe(const SuccessFunction& onSuccess, const ErrorFunction& onError, const CompleteFunction& onComplete);
 
 			template	<typename R>

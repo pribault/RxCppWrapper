@@ -72,6 +72,7 @@ Completable	Completable::create(const Handler& handler)
 			handler(
 				[subscriber]()
 				{
+					subscriber.on_next(1);
 					subscriber.on_completed();
 				},
 				[subscriber](std::exception_ptr error)
@@ -95,7 +96,7 @@ Completable	Completable::defer(const std::function<Completable()>& function)
 
 Completable		Completable::complete()
 {
-	return Completable(rxcpp::observable<>::empty<int>());
+	return Completable(rxcpp::observable<>::just<int>(1));
 }
 
 Completable		Completable::never()
@@ -110,18 +111,39 @@ Completable		Completable::error(std::exception_ptr error)
 
 Completable		Completable::andThen(Completable& other)
 {
-	return Completable(_observable->merge(*other._observable));
+	return Completable(_observable->ignore_elements()
+		.merge(*other._observable));
 }
 
-Completable		Completable::doOnSuccess(const SuccessFunction& onSuccess)
+Completable		Completable::repeat()
+{
+	return Completable(_observable->repeat());
+}
+
+Completable		Completable::repeat(size_t times)
+{
+	return Completable(_observable->repeat(times));
+}
+
+Completable		Completable::repeatUntil(const BooleanSupplier& supplier)
+{
+	return Completable(_observable->repeat()
+		.take_while([supplier](int)
+		{
+			return !supplier();
+		})
+	);
+}
+
+Completable		Completable::doOnComplete(const CompleteFunction& onComplete)
 {
 	return Completable(_observable->tap(
 		[](int){
 			// 
 		},
-		[onSuccess]()
+		[onComplete]()
 		{
-			onSuccess();
+			onComplete();
 		}
 	));
 }
@@ -136,23 +158,6 @@ Completable		Completable::doOnError(const ErrorFunction& onError)
 	));
 }
 
-Completable		Completable::doOnComplete(const CompleteFunction& onComplete)
-{
-	return Completable(_observable->tap(
-		[](int)
-		{
-		},
-		[onComplete](std::exception_ptr e)
-		{
-			onComplete();
-		},
-		[onComplete]()
-		{
-			onComplete();
-		}
-	));
-}
-
 Completable		Completable::observeOn(rxcpp::observe_on_one_worker coordination)
 {
 	return Completable(_observable->observe_on(coordination));
@@ -163,20 +168,33 @@ Completable		Completable::subscribeOn(rxcpp::synchronize_in_one_worker coordinat
 	return Completable(_observable->subscribe_on(coordination));
 }
 
-void			Completable::subscribe(const SuccessFunction& onSuccess, const ErrorFunction& onError, const CompleteFunction& onComplete)
+void			Completable::subscribe()
+{
+	subscribe(nullptr, nullptr);
+}
+
+void			Completable::subscribe(const CompleteFunction& onComplete)
+{
+	subscribe(onComplete, nullptr);
+}
+
+void			Completable::subscribe(const ErrorFunction& onError)
+{
+	subscribe(nullptr, onError);
+}
+
+void			Completable::subscribe(const CompleteFunction& onComplete, const ErrorFunction& onError)
 {
 	_observable->subscribe(
 		[](int)
 		{
 		},
-		[onError, onComplete](std::exception_ptr e)
+		[onError](std::exception_ptr e)
 		{
 			onError(e);
-			onComplete();
 		},
-		[onSuccess, onComplete]()
+		[onComplete]()
 		{
-			onSuccess();
 			onComplete();
 		}
 	);

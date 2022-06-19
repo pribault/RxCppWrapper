@@ -168,7 +168,7 @@ RxCW::Maybe<T>		RxCW::Single<T>::toMaybe()
 template	<typename T>
 RxCW::Completable	RxCW::Single<T>::ignoreElement()
 {
-	return Completable(_observable->ignore_elements());
+	return Completable(_observable->take(1));
 }
 
 template	<typename T>
@@ -181,6 +181,36 @@ template	<typename T>
 RxCW::Single<T>		RxCW::Single<T>::subscribeOn(rxcpp::synchronize_in_one_worker coordination)
 {
 	return Single<T>(_observable->subscribe_on(coordination));
+}
+
+template	<typename T>
+void				RxCW::Single<T>::subscribe()
+{
+	subscribe(nullptr, nullptr, nullptr);
+}
+
+template	<typename T>
+void				RxCW::Single<T>::subscribe(const SuccessFunction& onSuccess)
+{
+	subscribe(onSuccess, nullptr, nullptr);
+}
+
+template	<typename T>
+void				RxCW::Single<T>::subscribe(const ErrorFunction& onError)
+{
+	subscribe(nullptr, onError, nullptr);
+}
+
+template	<typename T>
+void				RxCW::Single<T>::subscribe(const CompleteFunction& onComplete)
+{
+	subscribe(nullptr, nullptr, onComplete);
+}
+
+template	<typename T>
+void				RxCW::Single<T>::subscribe(const SuccessFunction& onSuccess, const ErrorFunction& onError)
+{
+	subscribe(onSuccess, onError, nullptr);
 }
 
 template	<typename T>
@@ -215,6 +245,23 @@ template	<typename R>
 RxCW::Single<R>		RxCW::Single<T>::flatMap(const std::function<Single<R>(T)>& function)
 {
 	return RxCW::Single<R>(_observable->flat_map([function](T v) {
+		return *function(v)._observable;
+	}));
+}
+
+template	<typename T>
+template	<typename R>
+RxCW::Maybe<R>		RxCW::Single<T>::flatMapMaybe(const std::function<RxCW::Maybe<R>(T)>& function)
+{
+	return RxCW::Maybe<R>(_observable->flat_map([function](T v) {
+		return *function(v)._observable;
+	}));
+}
+
+template	<typename T>
+RxCW::Completable	RxCW::Single<T>::flatMapCompletable(const std::function<RxCW::Completable(T)>& function)
+{
+	return RxCW::Completable(_observable->flat_map([function](T v) {
 		return *function(v)._observable;
 	}));
 }

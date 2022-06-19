@@ -21,11 +21,11 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  * 
- * File: main.cpp
- * Created: 8th February 2022 3:59:46 pm
+ * File: ReadStream.inl
+ * Created: 29th May 2022 7:54:32 pm
  * Author: Paul Ribault (pribault.dev@gmail.com)
  * 
- * Last Modified: 13th February 2022 3:47:25 pm
+ * Last Modified: 29th May 2022 7:54:34 pm
  * Modified By: Paul Ribault (pribault.dev@gmail.com)
  */
 
@@ -35,55 +35,50 @@
 **************
 */
 
-#include <Single.h>
-
-#include <string>
-
-/*
-****************
-** namespaces **
-****************
-*/
-
-using namespace RxCW;
-
 /*
 ********************************************************************************
 ************************************ METHODS ***********************************
 ********************************************************************************
 */
 
-void	log(const std::string& pValue)
+template	<typename T>
+RxCW::ReadStream<T>::ReadStream(void)
 {
-	std::cout << "[thread " << std::this_thread::get_id() << "] " << pValue << std::endl;
 }
 
-int		main(int argc, char **argv)
+template	<typename T>
+RxCW::ReadStream<T>::~ReadStream(void)
 {
-	Single<int>::just(42)
-		.ignoreElement()
-		.subscribe([]() {
-			log("complete !");
-		}, [](const std::exception_ptr& e) {
-			log("error !");
+}
+
+template	<typename T>
+RxCW::Completable	RxCW::ReadStream<T>::rxPipeTo(WriteStream<T>& writeStream)
+{
+	return Completable::create([this, &writeStream](Completable::CompleteFunction onComplete, ErrorFunction onError)
+	{
+		writeStream.drainHandler([this]()
+		{
+			this->resume();
 		});
-	Single<int>::just(42)
-		.map<float>([](int value) {
-			return 66.6666;
-		})
-		.flatMap<int>([](float value) {
-			return Single<int>::just(-12);
-		})
-		.subscribeOn(rxcpp::synchronize_new_thread())
-		.subscribe([](int value) {
-			log("value: " + std::to_string(value));
-		}, [](const std::exception_ptr& e) {
-			log("error !");
-		}, []() {
-			log("complete !");
-			exit(0);
+		this->handler([this, &writeStream](const T& data)
+		{
+			writeStream.write(data);
+			if (writeStream.writeQueueFull())
+				this->pause();
 		});
-		while (true)
-			;
-	return 0;
+		this->endHandler([&writeStream, onComplete]()
+		{
+			writeStream.end();
+			onComplete();
+		});
+		this->exceptionHandler([onError](std::exception_ptr exception)
+		{
+			onError(exception);
+		});
+		writeStream.exceptionHandler([onError](std::exception_ptr exception)
+		{
+			onError(exception);
+		});
+		this->resume();
+	});
 }

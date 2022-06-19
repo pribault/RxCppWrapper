@@ -21,11 +21,11 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  * 
- * File: Single.h
- * Created: 8th February 2022 2:24:10 pm
+ * File: WriteStream.h
+ * Created: 28th May 2022 9:35:17 am
  * Author: Paul Ribault (pribault.dev@gmail.com)
  * 
- * Last Modified: 8th February 2022 2:24:38 pm
+ * Last Modified: 28th May 2022 9:35:40 am
  * Modified By: Paul Ribault (pribault.dev@gmail.com)
  */
 
@@ -37,21 +37,18 @@
 **************
 */
 
-// RxCpp
-#include <rx-observable.hpp>
+// RxCW
+#include "Completable.h"
+#include "StreamBase.h"
+
+// stl
+#include <functional>
 
 /*
 ****************
 ** class used **
 ****************
 */
-
-namespace	RxCW
-{
-	class		Completable;
-	template	<typename T>
-	class		Maybe;
-}
 
 /*
 **********************
@@ -62,7 +59,7 @@ namespace	RxCW
 namespace	RxCW
 {
 	template	<typename T>
-	class	Single
+	class	WriteStream : public StreamBase<T>
 	{
 
 		/*
@@ -73,9 +70,7 @@ namespace	RxCW
 
 		public:
 
-			friend class					Completable;
-			template<typename> friend class	Maybe;
-			template<typename> friend class	Single;
+			template<typename> friend class	WriteStream;
 
 			/*
 			***********
@@ -83,10 +78,7 @@ namespace	RxCW
 			***********
 			*/
 
-			typedef std::function<void(T)>													SuccessFunction;
-			typedef std::function<void(std::exception_ptr)>									ErrorFunction;
-			typedef std::function<void()>													CompleteFunction;
-			typedef std::function<void(SuccessFunction, CompleteFunction, ErrorFunction)>	Handler;
+			typedef std::function<void()>			DrainFunction;
 
 			/*
 			*************
@@ -97,35 +89,15 @@ namespace	RxCW
 			/**
 			 * Destructor
 			 */
-			~Single(void);
+			virtual ~WriteStream(void);
 
-			static Single<T>	create(const Handler& handler);
-			static Single<T>	defer(const std::function<Single<T>()>& function);
-			static Single<T>	just(const T& value);
-			static Single<T>	error(std::exception_ptr e);
-			static Single<T>	never();
-
-			Single<T>		doOnSuccess(const SuccessFunction& onSuccess);
-			Single<T>		doOnError(const ErrorFunction& onError);
-			Single<T>		doOnComplete(const CompleteFunction& onComplete);
-			Maybe<T>		toMaybe();
-			Completable		ignoreElement();
-			Single<T>		observeOn(rxcpp::observe_on_one_worker coordination);
-			Single<T>		subscribeOn(rxcpp::synchronize_in_one_worker coordination);
-			void			subscribe();
-			void			subscribe(const SuccessFunction& onSuccess);
-			void			subscribe(const ErrorFunction& onError);
-			void			subscribe(const CompleteFunction& onComplete);
-			void			subscribe(const SuccessFunction& onSuccess, const ErrorFunction& onError);
-			void			subscribe(const SuccessFunction& onSuccess, const ErrorFunction& onError, const CompleteFunction& onComplete);
-
-			template	<typename R>
-			Single<R>		map(const std::function<R(T)>& function);
-			template	<typename R>
-			Single<R>		flatMap(const std::function<Single<R>(T)>& function);
-			template	<typename R>
-			Maybe<R>		flatMapMaybe(const std::function<Maybe<R>(T)>& function);
-			Completable		flatMapCompletable(const std::function<Completable(T)>& function);
+			virtual void			drainHandler(const DrainFunction& handler) = 0;
+			virtual void			end() = 0;
+			virtual Completable		rxEnd();
+			virtual void			write(const T& data) = 0;
+			virtual Completable		rxWrite(const T& data);
+			virtual void			setWriteQueueMaxSize(size_t size) = 0;
+			virtual bool			writeQueueFull() = 0;
 
 		/*
 		************************************************************************
@@ -144,15 +116,13 @@ namespace	RxCW
 			/**
 			 * Constructor
 			 */
-			Single(const rxcpp::observable<T>& observable);
+			WriteStream(void);
 
 			/*
 			****************
 			** attributes **
 			****************
 			*/
-
-			std::shared_ptr<rxcpp::observable<T>>	_observable;
 
 		/*
 		************************************************************************
@@ -162,18 +132,7 @@ namespace	RxCW
 
 		private:
 
-			/*
-			*************
-			** methods **
-			*************
-			*/
-
-			/**
-			 * Constructor
-			 */
-			Single(void);
-
 	};
 }
 
-#include <Single.inl>
+#include <WriteStream.inl>

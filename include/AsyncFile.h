@@ -21,11 +21,11 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  * 
- * File: Single.h
- * Created: 8th February 2022 2:24:10 pm
+ * File: AsyncFile.h
+ * Created: 6th June 2022 1:44:47 pm
  * Author: Paul Ribault (pribault.dev@gmail.com)
  * 
- * Last Modified: 8th February 2022 2:24:38 pm
+ * Last Modified: 6th June 2022 1:44:52 pm
  * Modified By: Paul Ribault (pribault.dev@gmail.com)
  */
 
@@ -37,20 +37,21 @@
 **************
 */
 
-// RxCpp
-#include <rx-observable.hpp>
+// RxCW
+#include "ReadStream.h"
+#include "WriteStream.h"
+
+// stl
+#include <string>
 
 /*
 ****************
 ** class used **
 ****************
 */
-
 namespace	RxCW
 {
-	class		Completable;
-	template	<typename T>
-	class		Maybe;
+	class	FileSystem;
 }
 
 /*
@@ -61,8 +62,7 @@ namespace	RxCW
 
 namespace	RxCW
 {
-	template	<typename T>
-	class	Single
+	class	AsyncFile : public ReadStream<std::string>, public WriteStream<std::string>
 	{
 
 		/*
@@ -73,9 +73,7 @@ namespace	RxCW
 
 		public:
 
-			friend class					Completable;
-			template<typename> friend class	Maybe;
-			template<typename> friend class	Single;
+			friend class	FileSystem;
 
 			/*
 			***********
@@ -83,10 +81,8 @@ namespace	RxCW
 			***********
 			*/
 
-			typedef std::function<void(T)>													SuccessFunction;
-			typedef std::function<void(std::exception_ptr)>									ErrorFunction;
-			typedef std::function<void()>													CompleteFunction;
-			typedef std::function<void(SuccessFunction, CompleteFunction, ErrorFunction)>	Handler;
+			static const size_t	defaultReadBufferSize = 4;
+			static const size_t	defaultWriteQueueSize = 1;
 
 			/*
 			*************
@@ -97,35 +93,24 @@ namespace	RxCW
 			/**
 			 * Destructor
 			 */
-			~Single(void);
+			virtual ~AsyncFile(void);
 
-			static Single<T>	create(const Handler& handler);
-			static Single<T>	defer(const std::function<Single<T>()>& function);
-			static Single<T>	just(const T& value);
-			static Single<T>	error(std::exception_ptr e);
-			static Single<T>	never();
+			// Stream base
+			virtual void		exceptionHandler(const StreamBase<std::string>::ErrorFunction& handler);
 
-			Single<T>		doOnSuccess(const SuccessFunction& onSuccess);
-			Single<T>		doOnError(const ErrorFunction& onError);
-			Single<T>		doOnComplete(const CompleteFunction& onComplete);
-			Maybe<T>		toMaybe();
-			Completable		ignoreElement();
-			Single<T>		observeOn(rxcpp::observe_on_one_worker coordination);
-			Single<T>		subscribeOn(rxcpp::synchronize_in_one_worker coordination);
-			void			subscribe();
-			void			subscribe(const SuccessFunction& onSuccess);
-			void			subscribe(const ErrorFunction& onError);
-			void			subscribe(const CompleteFunction& onComplete);
-			void			subscribe(const SuccessFunction& onSuccess, const ErrorFunction& onError);
-			void			subscribe(const SuccessFunction& onSuccess, const ErrorFunction& onError, const CompleteFunction& onComplete);
+			// Read stream
+			virtual void		endHandler(const ReadStream<std::string>::EndFunction& handler);
+			virtual void		handler(const ReadStream<std::string>::DataFunction& handler);
 
-			template	<typename R>
-			Single<R>		map(const std::function<R(T)>& function);
-			template	<typename R>
-			Single<R>		flatMap(const std::function<Single<R>(T)>& function);
-			template	<typename R>
-			Maybe<R>		flatMapMaybe(const std::function<Maybe<R>(T)>& function);
-			Completable		flatMapCompletable(const std::function<Completable(T)>& function);
+			virtual void		pause();
+			virtual void		resume();
+
+			// Write stream
+			virtual void		drainHandler(const WriteStream<std::string>::DrainFunction& handler);
+			virtual void		end();
+			virtual void		write(const std::string& data);
+			virtual void		setWriteQueueMaxSize(size_t size);
+			virtual bool		writeQueueFull();
 
 		/*
 		************************************************************************
@@ -144,15 +129,18 @@ namespace	RxCW
 			/**
 			 * Constructor
 			 */
-			Single(const rxcpp::observable<T>& observable);
+			AsyncFile(void);
+
+			/**
+			 * Constructor
+			 */
+			AsyncFile(const std::string& fileName, const std::string& mode);
 
 			/*
 			****************
 			** attributes **
 			****************
 			*/
-
-			std::shared_ptr<rxcpp::observable<T>>	_observable;
 
 		/*
 		************************************************************************
@@ -168,12 +156,31 @@ namespace	RxCW
 			*************
 			*/
 
-			/**
-			 * Constructor
-			 */
-			Single(void);
+			Completable	rxInternalRead();
+			Completable	rxInternalWrite();
+
+			/*
+			****************
+			** attributes **
+			****************
+			*/
+
+			std::FILE*	_file;
+			bool		_closed;
+
+			size_t		_readBufferSize;
+			bool		_paused;
+			bool		_readEnded;
+
+			bool					_writeEnded;
+			size_t					_writeQueueSize;
+			bool					_writeQueueFull;
+			std::list<std::string>	_writeQueue;
+
+			StreamBase<std::string>::ErrorFunction	_errorHandler;
+			ReadStream<std::string>::EndFunction	_endHandler;
+			WriteStream<std::string>::DrainFunction	_drainHandler;
+			ReadStream<std::string>::DataFunction	_dataHandler;
 
 	};
 }
-
-#include <Single.inl>

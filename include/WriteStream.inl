@@ -21,11 +21,11 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  * 
- * File: main.cpp
- * Created: 8th February 2022 3:59:46 pm
+ * File: WriteStream.inl
+ * Created: 29th May 2022 7:54:46 pm
  * Author: Paul Ribault (pribault.dev@gmail.com)
  * 
- * Last Modified: 13th February 2022 3:47:25 pm
+ * Last Modified: 29th May 2022 7:54:48 pm
  * Modified By: Paul Ribault (pribault.dev@gmail.com)
  */
 
@@ -35,55 +35,54 @@
 **************
 */
 
-#include <Single.h>
-
-#include <string>
-
-/*
-****************
-** namespaces **
-****************
-*/
-
-using namespace RxCW;
-
 /*
 ********************************************************************************
 ************************************ METHODS ***********************************
 ********************************************************************************
 */
 
-void	log(const std::string& pValue)
+template	<typename T>
+RxCW::WriteStream<T>::WriteStream(void)
 {
-	std::cout << "[thread " << std::this_thread::get_id() << "] " << pValue << std::endl;
 }
 
-int		main(int argc, char **argv)
+template	<typename T>
+RxCW::WriteStream<T>::~WriteStream(void)
 {
-	Single<int>::just(42)
-		.ignoreElement()
-		.subscribe([]() {
-			log("complete !");
-		}, [](const std::exception_ptr& e) {
-			log("error !");
-		});
-	Single<int>::just(42)
-		.map<float>([](int value) {
-			return 66.6666;
-		})
-		.flatMap<int>([](float value) {
-			return Single<int>::just(-12);
-		})
-		.subscribeOn(rxcpp::synchronize_new_thread())
-		.subscribe([](int value) {
-			log("value: " + std::to_string(value));
-		}, [](const std::exception_ptr& e) {
-			log("error !");
-		}, []() {
-			log("complete !");
-			exit(0);
-		});
-		while (true)
-			;
-	return 0;
+}
+
+template	<typename T>
+RxCW::Completable	RxCW::WriteStream<T>::rxEnd()
+{
+	return Completable::create([this](Completable::CompleteFunction onComplete, Completable::ErrorFunction onError)
+	{
+		try
+		{
+			this->end();
+		}
+		catch (const std::exception& e)
+		{
+			onError(std::make_exception_ptr(e));
+			return;
+		}
+		onComplete();
+	});
+}
+
+template	<typename T>
+RxCW::Completable		RxCW::WriteStream<T>::rxWrite(const T& data)
+{
+	return Completable::create([this, data](Completable::CompleteFunction onComplete, Completable::ErrorFunction onError)
+	{
+		try
+		{
+			this->write(data);
+		}
+		catch (const std::exception& e)
+		{
+			onError(std::make_exception_ptr(e));
+			return;
+		}
+		onComplete();
+	});
 }

@@ -21,11 +21,11 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  * 
- * File: Single.h
- * Created: 8th February 2022 2:24:10 pm
+ * File: FileSystem.h
+ * Created: 29th May 2022 11:19:18 pm
  * Author: Paul Ribault (pribault.dev@gmail.com)
  * 
- * Last Modified: 8th February 2022 2:24:38 pm
+ * Last Modified: 29th May 2022 11:19:20 pm
  * Modified By: Paul Ribault (pribault.dev@gmail.com)
  */
 
@@ -37,20 +37,20 @@
 **************
 */
 
-// RxCpp
-#include <rx-observable.hpp>
+// RxCW
+#include "Single.h"
+
+// stl
+#include <string>
 
 /*
 ****************
 ** class used **
 ****************
 */
-
 namespace	RxCW
 {
-	class		Completable;
-	template	<typename T>
-	class		Maybe;
+	class	AsyncFile;
 }
 
 /*
@@ -61,8 +61,7 @@ namespace	RxCW
 
 namespace	RxCW
 {
-	template	<typename T>
-	class	Single
+	class	FileSystem
 	{
 
 		/*
@@ -73,20 +72,11 @@ namespace	RxCW
 
 		public:
 
-			friend class					Completable;
-			template<typename> friend class	Maybe;
-			template<typename> friend class	Single;
-
 			/*
 			***********
 			** types **
 			***********
 			*/
-
-			typedef std::function<void(T)>													SuccessFunction;
-			typedef std::function<void(std::exception_ptr)>									ErrorFunction;
-			typedef std::function<void()>													CompleteFunction;
-			typedef std::function<void(SuccessFunction, CompleteFunction, ErrorFunction)>	Handler;
 
 			/*
 			*************
@@ -97,35 +87,10 @@ namespace	RxCW
 			/**
 			 * Destructor
 			 */
-			~Single(void);
+			virtual ~FileSystem(void);
 
-			static Single<T>	create(const Handler& handler);
-			static Single<T>	defer(const std::function<Single<T>()>& function);
-			static Single<T>	just(const T& value);
-			static Single<T>	error(std::exception_ptr e);
-			static Single<T>	never();
-
-			Single<T>		doOnSuccess(const SuccessFunction& onSuccess);
-			Single<T>		doOnError(const ErrorFunction& onError);
-			Single<T>		doOnComplete(const CompleteFunction& onComplete);
-			Maybe<T>		toMaybe();
-			Completable		ignoreElement();
-			Single<T>		observeOn(rxcpp::observe_on_one_worker coordination);
-			Single<T>		subscribeOn(rxcpp::synchronize_in_one_worker coordination);
-			void			subscribe();
-			void			subscribe(const SuccessFunction& onSuccess);
-			void			subscribe(const ErrorFunction& onError);
-			void			subscribe(const CompleteFunction& onComplete);
-			void			subscribe(const SuccessFunction& onSuccess, const ErrorFunction& onError);
-			void			subscribe(const SuccessFunction& onSuccess, const ErrorFunction& onError, const CompleteFunction& onComplete);
-
-			template	<typename R>
-			Single<R>		map(const std::function<R(T)>& function);
-			template	<typename R>
-			Single<R>		flatMap(const std::function<Single<R>(T)>& function);
-			template	<typename R>
-			Maybe<R>		flatMapMaybe(const std::function<Maybe<R>(T)>& function);
-			Completable		flatMapCompletable(const std::function<Completable(T)>& function);
+			static AsyncFile*			open(const std::string& fileName, const std::string& mode);
+			static Single<AsyncFile*>	rxOpen(const std::string& fileName, const std::string& mode);
 
 		/*
 		************************************************************************
@@ -136,23 +101,10 @@ namespace	RxCW
 		protected:
 
 			/*
-			*************
-			** methods **
-			*************
-			*/
-
-			/**
-			 * Constructor
-			 */
-			Single(const rxcpp::observable<T>& observable);
-
-			/*
 			****************
 			** attributes **
 			****************
 			*/
-
-			std::shared_ptr<rxcpp::observable<T>>	_observable;
 
 		/*
 		************************************************************************
@@ -171,9 +123,7 @@ namespace	RxCW
 			/**
 			 * Constructor
 			 */
-			Single(void);
+			FileSystem(void);
 
 	};
 }
-
-#include <Single.inl>

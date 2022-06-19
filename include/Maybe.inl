@@ -194,6 +194,36 @@ RxCW::Maybe<T>		RxCW::Maybe<T>::subscribeOn(rxcpp::synchronize_in_one_worker coo
 }
 
 template	<typename T>
+void			RxCW::Maybe<T>::subscribe()
+{
+	subscribe(nullptr, nullptr, nullptr);
+}
+
+template	<typename T>
+void			RxCW::Maybe<T>::subscribe(const SuccessFunction& onSuccess)
+{
+	subscribe(onSuccess, nullptr, nullptr);
+}
+
+template	<typename T>
+void			RxCW::Maybe<T>::subscribe(const ErrorFunction& onError)
+{
+	subscribe(nullptr, onError, nullptr);
+}
+
+template	<typename T>
+void			RxCW::Maybe<T>::subscribe(const CompleteFunction& onComplete)
+{
+	subscribe(nullptr, nullptr, onComplete);
+}
+
+template	<typename T>
+void			RxCW::Maybe<T>::subscribe(const SuccessFunction& onSuccess, const ErrorFunction& onError)
+{
+	subscribe(onSuccess, onError, nullptr);
+}
+
+template	<typename T>
 void				RxCW::Maybe<T>::subscribe(const SuccessFunction& onSuccess, const ErrorFunction& onError, const CompleteFunction& onComplete)
 {
 	_observable->subscribe(
