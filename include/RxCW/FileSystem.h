@@ -38,6 +38,7 @@
 */
 
 // RxCW
+#include "RxCW/Completable.h"
 #include "RxCW/Single.h"
 
 // stl
@@ -90,7 +91,7 @@ namespace	RxCW
 			/**
 			 * @brief Open the given file with the specified modes.
 			 * 
-			 * @param fileName The file to open.
+			 * @param path The file to open.
 			 * @param mode The mode to open the file with.
 			 * @return AsyncFile* The resulting object to manipulate the file with. Can be:\n
 			 *  - @b r: Open the file for reading, does not create the file if it does not already exists.\n
@@ -100,16 +101,126 @@ namespace	RxCW
 			 *  - @b w+: Create a file for read/write, truncate the file if it already exists, create it otherwise.\n
 			 *  - @b a+: Open a file for read/write, writings will be appended to the file. Create the file if it does not already exists.\n
 			 */
-			static AsyncFile*			open(const std::string& fileName, const std::string& mode);
+			static AsyncFile*			open(const std::string& path, const std::string& mode);
 
 			/**
 			 * @brief The reactive version of the @ref open method.
 			 * 
-			 * @param fileName The file to open.
+			 * @param path The file to open.
 			 * @param mode The mode to open the file with.
 			 * @return Single<AsyncFile*> The resulting Single.
 			 */
-			static Single<AsyncFile*>	rxOpen(const std::string& fileName, const std::string& mode);
+			static Single<AsyncFile*>	rxOpen(const std::string& path, const std::string& mode);
+
+			/**
+			 * @brief Check if a file or directory exists
+			 * 
+			 * @param path The path to check.
+			 * @return \b true: if file or directory exists.
+			 * @return \b false: if file or directory does not exists.
+			 */
+			static bool				exists(const std::string& path);
+
+			/**
+			 * @brief The reactive version of the @ref exists method.
+			 * 
+			 * @param path The file to check.
+			 * @return Single<bool> The resulting Single.
+			 */
+			static Single<bool>		rxExists(const std::string& path);
+
+			/**
+			 * @brief Remove a file or directory.
+			 * 
+			 * @param path The file or directory to remove.
+			 */
+			static void				remove(const std::string& path);
+
+			/**
+			 * @brief The reactive version of the @ref remove method.
+			 * 
+			 * @param path The file or directory to remove.
+			 * @return Completable The resulting Completable.
+			 */
+			static Completable		rxRemove(const std::string& path);
+
+			/**
+			 * @brief Remove a file or directory with all its content.
+			 * 
+			 * @param path The file or directory to remove recursively.
+			 */
+			static void				removeRecursive(const std::string& path);
+
+			/**
+			 * @brief The reactive version of the @ref removeRecursive method.
+			 * 
+			 * @param path The file or directory to remove recursively.
+			 * @return Completable The resulting Completable.
+			 */
+			static Completable		rxRemoveRecursive(const std::string& path);
+
+			/**
+			 * @brief Move/rename a file or a directory.
+			 * 
+			 * @param oldPath The current path.
+			 * @param newPath The destination path.
+			 */
+			static void				move(const std::string& oldPath, const std::string& newPath);
+
+			/**
+			 * @brief The reactive version of the @ref move method.
+			 * 
+			 * @param oldPath The current path.
+			 * @param newPath The destination path.
+			 * @return Completable The resulting Completable.
+			 */
+			static Completable		rxMove(const std::string& oldPath, const std::string& newPath);
+
+			/**
+			 * @brief Create a directory.
+			 * 
+			 * @param path The directory path.
+			 */
+			static void				mkdir(const std::string& path);
+
+			/**
+			 * @brief The reactive version of the @ref mkdir method.
+			 * 
+			 * @param path The directory path.
+			 * @return Completable The resulting Completable.
+			 */
+			static Completable		rxMkdir(const std::string& path);
+
+			/**
+			 * @brief Create a directory and all its parents if they don't exists.
+			 * 
+			 * @param path The directory path.
+			 */
+			static void				mkdirs(const std::string& path);
+
+			/**
+			 * @brief The reactive version of the @ref mkdirs method.
+			 * 
+			 * @param path The directory path.
+			 * @return Completable The resulting Completable.
+			 */
+			static Completable		rxMkdirs(const std::string& path);
+
+			/**
+			 * @brief Get a file size.
+			 * 
+			 * @param path The file path.
+			 * @return size_t The file size.
+			 */
+			static size_t			fileSize(const std::string& path);
+
+			/**
+			 * @brief The reactive version of the @ref fileSize method.
+			 * 
+			 * @param path The file path.
+			 * @return Completable The resulting Completable.
+			 */
+			static Single<size_t>	rxFileSize(const std::string& path);
 
 		/*
 		************************************************************************

@@ -43,3 +43,5 @@ set_target_properties(RxCW
 )
 
 target_link_libraries(RxCW PRIVATE rxcpp)
+
+target_compile_features(RxCW PRIVATE cxx_std_17)

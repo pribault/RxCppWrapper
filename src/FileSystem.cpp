@@ -41,6 +41,9 @@
 #include "RxCW/AsyncFile.h"
 #include "RxCW/Single.h"
 
+// stl
+#include <filesystem>
+
 /*
 ****************
 ** namespaces **
@@ -70,7 +73,104 @@ AsyncFile*			FileSystem::open(const std::string& fileName, const std::string& mo
 
 Single<AsyncFile*>	FileSystem::rxOpen(const std::string& fileName, const std::string& mode)
 {
-	return Single<AsyncFile*>::defer([fileName, mode]() {
+	return Single<AsyncFile*>::defer([fileName, mode]()
+	{
 		return Single<AsyncFile*>::just(FileSystem::open(fileName, mode));
+	});
+}
+
+bool			FileSystem::exists(const std::string& path)
+{
+	return std::filesystem::exists(path);
+}
+
+Single<bool>	FileSystem::rxExists(const std::string& path)
+{
+	return Single<bool>::defer([path]()
+	{
+		return Single<bool>::just(FileSystem::exists(path));
+	});
+}
+
+void			FileSystem::remove(const std::string& path)
+{
+	std::filesystem::remove(path);
+}
+
+Completable		FileSystem::rxRemove(const std::string& path)
+{
+	return Completable::defer([path]()
+	{
+		FileSystem::remove(path);
+		return Completable::complete();
+	});
+}
+
+void			FileSystem::removeRecursive(const std::string& path)
+{
+	std::filesystem::remove_all(path);
+}
+
+Completable		FileSystem::rxRemoveRecursive(const std::string& path)
+{
+	return Completable::defer([path]()
+	{
+		FileSystem::removeRecursive(path);
+		return Completable::complete();
+	});
+}
+
+void			FileSystem::move(const std::string& oldPath, const std::string& newPath)
+{
+	std::filesystem::rename(oldPath, newPath);
+}
+
+Completable		FileSystem::rxMove(const std::string& oldPath, const std::string& newPath)
+{
+	return Completable::defer([oldPath, newPath]()
+	{
+		FileSystem::move(oldPath, newPath);
+		return Completable::complete();
+	});
+}
+
+void			FileSystem::mkdir(const std::string& path)
+{
+	std::filesystem::create_directory(path);
+}
+
+Completable		FileSystem::rxMkdir(const std::string& path)
+{
+	return Completable::defer([path]()
+	{
+		FileSystem::mkdir(path);
+		return Completable::complete();
+	});
+}
+
+void			FileSystem::mkdirs(const std::string& path)
+{
+	std::filesystem::create_directories(path);
+}
+
+Completable		FileSystem::rxMkdirs(const std::string& path)
+{
+	return Completable::defer([path]()
+	{
+		FileSystem::mkdirs(path);
+		return Completable::complete();
+	});
+}
+
+size_t			FileSystem::fileSize(const std::string& path)
+{
+	return std::filesystem::file_size(path);
+}
+
+Single<size_t>	FileSystem::rxFileSize(const std::string& path)
+{
+	return Single<size_t>::defer([path]()
+	{
+		return Single<size_t>::just(FileSystem::fileSize(path));
 	});
 }
