@@ -2,6 +2,7 @@
 
 [![GitHub license](https://img.shields.io/github/license/pribault/RxCppWrapper)](https://github.com/pribault/RxCppWrapper/blob/master/LICENSE)
 [![Maintenance](https://img.shields.io/badge/Maintained%3F-yes-green.svg)](https://github.com/pribault/RxCppWrapper/graphs/commit-activity)
+![](https://img.shields.io/badge/C%2B%2B-17-blue)
 
 Because rxcpp is a powerful reactive library but can be hardly understandable because of the methods weak typing, I wanted to bring with this wrapper strong typed classes and methods with some useful objects from rxjava like Completable, Single, Maybe and readctive streams.
 
