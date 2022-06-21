@@ -15,8 +15,8 @@ if "VCPKG_PATH" not in os.environ:
 	raise Exception("environment variable VCPKG_PATH not set")
 vcpkgPath = os.environ["VCPKG_PATH"]
 
-print(scriptDir)
-print(rootDir)
-print(includeDir)
-print(srcDir)
-print(vcpkgPath)
+print("root: %s" % rootDir)
+print("script: %s" % scriptDir)
+print("include: %s" % includeDir)
+print("sources: %s" % srcDir)
+print("vcpkg: %s" % vcpkgPath)

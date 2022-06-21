@@ -38,8 +38,8 @@
 */
 
 // RxCW
-#include "ReadStream.h"
-#include "WriteStream.h"
+#include "RxCW/ReadStream.h"
+#include "RxCW/WriteStream.h"
 
 // stl
 #include <string>
@@ -49,6 +49,7 @@
 ** class used **
 ****************
 */
+
 namespace	RxCW
 {
 	class	FileSystem;
@@ -62,6 +63,10 @@ namespace	RxCW
 
 namespace	RxCW
 {
+	/**
+	 * @class AsyncFile AsyncFile.h RxCW/AsyncFile.h
+	 * @brief Allows to asynchronously read from and write to a file.
+	 */
 	class	AsyncFile : public ReadStream<std::string>, public WriteStream<std::string>
 	{
 
@@ -81,8 +86,15 @@ namespace	RxCW
 			***********
 			*/
 
-			static const size_t	defaultReadBufferSize = 4;
-			static const size_t	defaultWriteQueueSize = 1;
+			/**
+			 * @brief The default read buffer size.
+			 * 
+			 */
+			static const size_t	DEFAULT_READ_BUFFER_SIZE = 4096;
+			/**
+			 * @brief The default write queue size.
+			 */
+			static const size_t	DEFAULT_WRITE_QUEUE_SIZE = 16;
 
 			/*
 			*************
@@ -91,25 +103,73 @@ namespace	RxCW
 			*/
 
 			/**
-			 * Destructor
+			 * @brief Destroy the Async File object
 			 */
 			virtual ~AsyncFile(void);
 
-			// Stream base
+			/**
+			 * @brief Set the handler to call when an exception occurs.
+			 * 
+			 * @param handler The handler.
+			 */
 			virtual void		exceptionHandler(const StreamBase<std::string>::ErrorFunction& handler);
 
-			// Read stream
+			/**
+			 * @brief Set the handler to call when the file end is reached while reading.
+			 * 
+			 * @param handler The handler.
+			 */
 			virtual void		endHandler(const ReadStream<std::string>::EndFunction& handler);
+
+			/**
+			 * @brief Set the handler to call for each block of data read.
+			 * 
+			 * @param handler The handler.
+			 */
 			virtual void		handler(const ReadStream<std::string>::DataFunction& handler);
 
+			/**
+			 * @brief Pause the stream for reading.
+			 */
 			virtual void		pause();
+
+			/**
+			 * @brief Resume the stream for reading.
+			 */
 			virtual void		resume();
 
-			// Write stream
+			/**
+			 * @brief Set the handler to call when data can be pushed to the write queue again.
+			 * 
+			 * @param handler The handler.
+			 */
 			virtual void		drainHandler(const WriteStream<std::string>::DrainFunction& handler);
+
+			/**
+			 * @brief End writing.
+			 */
 			virtual void		end();
+
+			/**
+			 * @brief Write the given data to the file.
+			 * 
+			 * @param data The data to write to the file.
+			 */
 			virtual void		write(const std::string& data);
+
+			/**
+			 * @brief Set the write queue max size.
+			 * 
+			 * @param size The write queue max size.
+			 */
 			virtual void		setWriteQueueMaxSize(size_t size);
+
+			/**
+			 * @brief Checks if the write queue is full.
+			 * 
+			 * @return \b true: no more data can be written to the file for now.
+			 * @return \b false: data can be written to the file.
+			 */
 			virtual bool		writeQueueFull();
 
 		/*
@@ -127,12 +187,17 @@ namespace	RxCW
 			*/
 
 			/**
-			 * Constructor
+			 * @brief Construct a new Async File object.
 			 */
 			AsyncFile(void);
 
 			/**
-			 * Constructor
+			 * @brief Construct a new Async File object.
+			 * 
+			 * @param fileName The file to open.
+			 * @param mode The mode to open the file with.
+			 * 
+			 * @see FileSystem::open
 			 */
 			AsyncFile(const std::string& fileName, const std::string& mode);
 

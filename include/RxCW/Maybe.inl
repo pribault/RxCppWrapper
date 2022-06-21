@@ -36,7 +36,7 @@
 */
 
 // RxCW
-#include <Single.h>
+#include <RxCW/Single.h>
 
 /*
 ********************************************************************************
@@ -182,6 +182,15 @@ RxCW::Single<T>		RxCW::Maybe<T>::toSingle()
 }
 
 template	<typename T>
+RxCW::Completable	RxCW::Maybe<T>::ignoreElement()
+{
+	return Completable(_observable->map([](T)
+	{
+		return 1;
+	}));
+}
+
+template	<typename T>
 RxCW::Maybe<T>		RxCW::Maybe<T>::observeOn(rxcpp::observe_on_one_worker coordination)
 {
 	return Maybe<T>(_observable->observe_on(coordination));
@@ -255,6 +264,14 @@ template	<typename R>
 RxCW::Maybe<R>		RxCW::Maybe<T>::flatMap(const std::function<Maybe<R>(T)>& function)
 {
 	return RxCW::Maybe<R>(_observable->flat_map([function](T v) {
+		return *function(v)._observable;
+	}));
+}
+
+template	<typename T>
+RxCW::Completable	RxCW::Maybe<T>::flatMapCompletable(const std::function<RxCW::Completable(T)>& function)
+{
+	return RxCW::Completable(_observable->flat_map([function](T v) {
 		return *function(v)._observable;
 	}));
 }

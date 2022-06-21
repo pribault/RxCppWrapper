@@ -35,8 +35,8 @@
 **************
 */
 
-#include <Maybe.h>
-#include <Single.h>
+#include <RxCW/Maybe.h>
+#include <RxCW/Single.h>
 
 #include <string>
 

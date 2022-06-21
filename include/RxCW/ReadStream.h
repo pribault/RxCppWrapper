@@ -21,11 +21,11 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  * 
- * File: StreamBase.h
- * Created: 28th May 2022 9:35:05 am
+ * File: ReadStream.h
+ * Created: 28th May 2022 9:35:11 am
  * Author: Paul Ribault (pribault.dev@gmail.com)
  * 
- * Last Modified: 28th May 2022 9:35:36 am
+ * Last Modified: 28th May 2022 9:35:26 am
  * Modified By: Paul Ribault (pribault.dev@gmail.com)
  */
 
@@ -37,6 +37,13 @@
 **************
 */
 
+// RxCW
+#include "RxCW/Completable.h"
+#include "RxCW/StreamBase.h"
+
+// stl
+#include <functional>
+
 /*
 ****************
 ** class used **
@@ -45,6 +52,9 @@
 
 namespace	RxCW
 {
+	class	Completable;
+	template	<typename T>
+	class	WriteStream;
 }
 
 /*
@@ -55,8 +65,14 @@ namespace	RxCW
 
 namespace	RxCW
 {
+	/**
+	 * @class ReadStream ReadStream.h RxCW/ReadStream.h
+	 * @brief the base class for reactive read streams.
+	 * 
+	 * @tparam T the type handled by the stream
+	 */
 	template	<typename T>
-	class	StreamBase
+	class	ReadStream : public virtual StreamBase<T>
 	{
 
 		/*
@@ -67,7 +83,7 @@ namespace	RxCW
 
 		public:
 
-			template<typename> friend class	StreamBase;
+			template<typename> friend class	ReadStream;
 
 			/*
 			***********
@@ -75,7 +91,15 @@ namespace	RxCW
 			***********
 			*/
 
-			typedef std::function<void(std::exception_ptr)>		ErrorFunction;
+			/**
+			 * @brief Function that will be called when the stream ends.
+			 */
+			typedef std::function<void()>			EndFunction;
+
+			/**
+			 * @brief Function that will be called for each block of data read.
+			 */
+			typedef std::function<void(const T&)>	DataFunction;
 
 			/*
 			*************
@@ -84,11 +108,41 @@ namespace	RxCW
 			*/
 
 			/**
-			 * Destructor
+			 * @brief Destroy the Read Stream object.
 			 */
-			virtual ~StreamBase(void);
+			virtual ~ReadStream(void);
 
-			virtual void	exceptionHandler(const ErrorFunction& handler) = 0;
+			/**
+			 * @brief Set the handler to call when the file end is reached while reading.
+			 * 
+			 * @param handler The handler.
+			 */
+			virtual void		endHandler(const EndFunction& handler) = 0;
+
+			/**
+			 * @brief Set the handler to call for each block of data read.
+			 * 
+			 * @param handler The handler.
+			 */
+			virtual void		handler(const DataFunction& handler) = 0;
+
+			/**
+			 * @brief Pause the stream.
+			 */
+			virtual void		pause() = 0;
+
+			/**
+			 * @brief Resume the stream.
+			 */
+			virtual void		resume() = 0;
+
+			/**
+			 * @brief Asynchronously pipe this stream to the given WriteStream.
+			 * 
+			 * @param writeStream The WriteStream to pipe this ReadStream to.
+			 * @return The resulting Completable.
+			 */
+			virtual Completable	rxPipeTo(WriteStream<T>& writeStream);
 
 		/*
 		************************************************************************
@@ -105,25 +159,11 @@ namespace	RxCW
 			*/
 
 			/**
-			 * Constructor
+			 * @brief Construct the Read Stream object.
 			 */
-			StreamBase(void);
-
-			/*
-			****************
-			** attributes **
-			****************
-			*/
-
-		/*
-		************************************************************************
-		******************************** PRIVATE *******************************
-		************************************************************************
-		*/
-
-		private:
+			ReadStream(void);
 
 	};
 }
 
-#include <StreamBase.inl>
+#include <RxCW/ReadStream.inl>

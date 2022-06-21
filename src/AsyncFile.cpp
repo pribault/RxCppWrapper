@@ -29,7 +29,7 @@
  * Modified By: Paul Ribault (pribault.dev@gmail.com)
  */
 
-#include "AsyncFile.h"
+#include "RxCW/AsyncFile.h"
 
 /*
 **************
@@ -53,23 +53,17 @@ using namespace RxCW;
 
 AsyncFile::AsyncFile(void)
 	: _closed(false)
-	, _readBufferSize(defaultReadBufferSize)
+	, _readBufferSize(DEFAULT_READ_BUFFER_SIZE)
 	, _paused(true)
 	, _readEnded(false)
 	, _writeEnded(false)
-	, _writeQueueSize(defaultWriteQueueSize)
+	, _writeQueueSize(DEFAULT_WRITE_QUEUE_SIZE)
 	, _writeQueueFull(false)
 {
 }
 
 AsyncFile::AsyncFile(const std::string& fileName, const std::string& mode)
-	: _closed(false)
-	, _readBufferSize(defaultReadBufferSize)
-	, _paused(true)
-	, _readEnded(false)
-	, _writeEnded(false)
-	, _writeQueueSize(defaultWriteQueueSize)
-	, _writeQueueFull(false)
+	: AsyncFile()
 {
 	_file = std::fopen(fileName.c_str(), mode.c_str());
 }

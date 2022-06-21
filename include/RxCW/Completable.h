@@ -48,6 +48,10 @@
 
 namespace	RxCW
 {
+	/**
+	 * @class Completable Completable.h RxCW/Completable.h
+	 * @brief Represents an asynchronous object that can either complete or fail.
+	 */
 	class	Completable
 	{
 
@@ -68,9 +72,24 @@ namespace	RxCW
 			***********
 			*/
 
+			/**
+			 * @brief Function that can be called when a Completable fails.
+			 */
 			typedef std::function<void(std::exception_ptr)>					ErrorFunction;
+
+			/**
+			 * @brief Function that can be called when a Completable completes.
+			 */
 			typedef std::function<void()>									CompleteFunction;
+
+			/**
+			 * @brief Function that can be used to construct a new Completable. It takes two other functions to either make the Completable fail, or complete.
+			 */
 			typedef std::function<void(CompleteFunction, ErrorFunction)>	Handler;
+
+			/**
+			 * @brief Function supplying a boolean.
+			 */
 			typedef std::function<bool()>									BooleanSupplier;
 
 			/*
@@ -80,27 +99,136 @@ namespace	RxCW
 			*/
 
 			/**
-			 * Destructor
+			 * @brief Destroy the Completable object.
 			 */
 			~Completable(void);
 
+			/**
+			 * @brief Create a new Completable using the given handler.
+			 * 
+			 * @param handler The handler.
+			 * @return Completable The resulting Completable.
+			 */
 			static Completable	create(const Handler& handler);
-			static Completable	defer(const std::function<Completable()>& function);
-			static Completable	complete();
-			static Completable	never();
-			static Completable	error(std::exception_ptr e);
 
+			/**
+			 * @brief Defer Completable creation to the given function.
+			 * 
+			 * @param function The function.
+			 * @return Completable The resulting Completable.
+			 */
+			static Completable	defer(const std::function<Completable()>& function);
+
+			/**
+			 * @brief Create a Completable instance completing instantly when subscribed to.
+			 * 
+			 * @return Completable The resulting Completable.
+			 */
+			static Completable	complete();
+
+			/**
+			 * @brief Create a Completable that never completes nor fails.
+			 * 
+			 * @return Completable The resulting Completable.
+			 */
+			static Completable	never();
+
+			/**
+			 * @brief Create a Completable instance failing instantly with the given error when subscribed to.
+			 * 
+			 * @param error The error as an exception pointer.
+			 * @return Completable The resulting Completable.
+			 */
+			static Completable	error(std::exception_ptr error);
+
+			/**
+			 * @brief Returns a Completable that will run this Completable first, and then the given Completable.
+			 * 
+			 * @param other The Completable to run after this one.
+			 * @return Completable The resulting Completable.
+			 */
 			Completable		andThen(Completable& other);
+
+			/**
+			 * @brief Repeat this Completable infinitely.
+			 * 
+			 * @return Completable The resulting Completable.
+			 */
 			Completable		repeat();
+
+			/**
+			 * @brief Repeat this Completable the given number of times.
+			 * 
+			 * @param times The number of times to repeat this Completable.
+			 * @return Completable The resulting Completable.
+			 */
 			Completable		repeat(size_t times);
+
+			/**
+			 * @brief Repeat this Completable until the given BooleanSupplier returns true.
+			 * 
+			 * @param supplier The BooleanSupplier.
+			 * @return Completable The resulting Completable.
+			 */
 			Completable		repeatUntil(const BooleanSupplier& supplier);
+
+			/**
+			 * @brief Calls the given function on this Completable completion.
+			 * 
+			 * @param onComplete The function to call.
+			 * @return Completable The resulting Completable.
+			 */
 			Completable		doOnComplete(const CompleteFunction& onComplete);
+
+			/**
+			 * @brief Calls the given function on this Completable error.
+			 * 
+			 * @param onError The function to call.
+			 * @return Completable The resulting Completable.
+			 */
 			Completable		doOnError(const ErrorFunction& onError);
+
+			/**
+			 * @brief All values are queued and delivered using the given rxcpp coordination.
+			 * 
+			 * @param coordination The rxcpp coordination.
+			 * @return Completable The resulting Completable.
+			 */
 			Completable		observeOn(rxcpp::observe_on_one_worker coordination);
+
+			/**
+			 * @brief Subscription and unsubscription are queued and delivered using the given rxcpp coordination.
+			 * 
+			 * @param coordination The rxcpp coordination.
+			 * @return Completable The resulting Completable.
+			 */
 			Completable		subscribeOn(rxcpp::synchronize_in_one_worker coordination);
+
+			/**
+			 * @brief Subscribe to this Completable.
+			 */
 			void			subscribe();
+
+			/**
+			 * @brief Subscribe to this Completable.
+			 * 
+			 * @param onComplete Function called on Completable completion.
+			 */
 			void			subscribe(const CompleteFunction& onComplete);
+
+			/**
+			 * @brief Subscribe to this Completable.
+			 * 
+			 * @param onError Function called on Completable error.
+			 */
 			void			subscribe(const ErrorFunction& onError);
+
+			/**
+			 * @brief Subscribe to this Completable.
+			 * 
+			 * @param onComplete Function called on Completable completion.
+			 * @param onError Function called on Completable error.
+			 */
 			void			subscribe(const CompleteFunction& onComplete, const ErrorFunction& onError);
 
 		/*
@@ -117,6 +245,9 @@ namespace	RxCW
 			****************
 			*/
 
+			/**
+			 * @brief The underlying rxcpp observable.
+			 */
 			std::shared_ptr<rxcpp::observable<int>>	_observable;
 
 		/*
@@ -134,12 +265,14 @@ namespace	RxCW
 			*/
 
 			/**
-			 * Constructor
+			 * @brief Construct a new Completable object.
+			 * 
+			 * @param observable The underlying rxcpp observable.
 			 */
 			Completable(const rxcpp::observable<int>& observable);
 
 			/**
-			 * Constructor
+			 * @brief Construct a new Completable object.
 			 */
 			Completable(void);
 

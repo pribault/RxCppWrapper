@@ -21,34 +21,15 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  * 
- * File: WriteStream.h
- * Created: 28th May 2022 9:35:17 am
+ * File: StreamBase.h
+ * Created: 28th May 2022 9:35:05 am
  * Author: Paul Ribault (pribault.dev@gmail.com)
  * 
- * Last Modified: 28th May 2022 9:35:40 am
+ * Last Modified: 28th May 2022 9:35:36 am
  * Modified By: Paul Ribault (pribault.dev@gmail.com)
  */
 
 #pragma once
-
-/*
-**************
-** includes **
-**************
-*/
-
-// RxCW
-#include "Completable.h"
-#include "StreamBase.h"
-
-// stl
-#include <functional>
-
-/*
-****************
-** class used **
-****************
-*/
 
 /*
 **********************
@@ -58,8 +39,14 @@
 
 namespace	RxCW
 {
+	/**
+	 * @class StreamBase StreamBase.h RxCW/StreamBase.h
+	 * @brief the base class for reactive streams.
+	 * 
+	 * @tparam T the type handled by the stream
+	 */
 	template	<typename T>
-	class	WriteStream : public StreamBase<T>
+	class	StreamBase
 	{
 
 		/*
@@ -70,7 +57,13 @@ namespace	RxCW
 
 		public:
 
-			template<typename> friend class	WriteStream;
+			/*
+			*************
+			** friends **
+			*************
+			*/
+
+			template<typename> friend class	StreamBase;
 
 			/*
 			***********
@@ -78,7 +71,10 @@ namespace	RxCW
 			***********
 			*/
 
-			typedef std::function<void()>			DrainFunction;
+			/**
+			 * @brief Function that can be called when the stream encounters an exception.
+			 */
+			typedef std::function<void(std::exception_ptr)>		ErrorFunction;
 
 			/*
 			*************
@@ -87,17 +83,16 @@ namespace	RxCW
 			*/
 
 			/**
-			 * Destructor
+			 * @brief Destroy the Stream Base object.
 			 */
-			virtual ~WriteStream(void);
+			virtual ~StreamBase(void);
 
-			virtual void			drainHandler(const DrainFunction& handler) = 0;
-			virtual void			end() = 0;
-			virtual Completable		rxEnd();
-			virtual void			write(const T& data) = 0;
-			virtual Completable		rxWrite(const T& data);
-			virtual void			setWriteQueueMaxSize(size_t size) = 0;
-			virtual bool			writeQueueFull() = 0;
+			/**
+			 * @brief set the exception handler. Will be called when an exception occurs.
+			 * 
+			 * @param handler the handler to call
+			 */
+			virtual void	exceptionHandler(const ErrorFunction& handler) = 0;
 
 		/*
 		************************************************************************
@@ -114,25 +109,11 @@ namespace	RxCW
 			*/
 
 			/**
-			 * Constructor
+			 * @brief Construct the Stream Base object.
 			 */
-			WriteStream(void);
-
-			/*
-			****************
-			** attributes **
-			****************
-			*/
-
-		/*
-		************************************************************************
-		******************************** PRIVATE *******************************
-		************************************************************************
-		*/
-
-		private:
+			StreamBase(void);
 
 	};
 }
 
-#include <WriteStream.inl>
+#include <RxCW/StreamBase.inl>

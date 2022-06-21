@@ -35,8 +35,8 @@
 **************
 */
 
-#include <Completable.h>
-#include <Maybe.h>
+#include <RxCW/Completable.h>
+#include <RxCW/Maybe.h>
 
 /*
 ********************************************************************************
@@ -63,23 +63,13 @@ RxCW::Single<T>::~Single(void)
 template	<typename T>
 RxCW::Single<T>	RxCW::Single<T>::create(const Handler& handler)
 {
-	bool	gotValue = false;
-
 	return Single<T>(rxcpp::observable<>::create<T>(
 		[handler](rxcpp::subscriber<T> subscriber)
 	{
 		handler(
 			[subscriber](T value)
 		{
-			if (gotValue)
-				throw new std::exception("Single doesn't accept multiple values. Use Observable instead");
-			gotValue = true;
 			subscriber.on_next(value);
-		},
-			[subscriber]()
-		{
-			if (!gotValue)
-				throw new std::exception("Single with no value, use Maybe instead");
 			subscriber.on_completed();
 		},
 			[subscriber](std::exception_ptr error)
@@ -168,7 +158,10 @@ RxCW::Maybe<T>		RxCW::Single<T>::toMaybe()
 template	<typename T>
 RxCW::Completable	RxCW::Single<T>::ignoreElement()
 {
-	return Completable(_observable->take(1));
+	return Completable(_observable->map([](T)
+	{
+		return 1;
+	}));
 }
 
 template	<typename T>

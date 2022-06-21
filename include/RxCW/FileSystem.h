@@ -21,11 +21,11 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  * 
- * File: ReadStream.h
- * Created: 28th May 2022 9:35:11 am
+ * File: FileSystem.h
+ * Created: 29th May 2022 11:19:18 pm
  * Author: Paul Ribault (pribault.dev@gmail.com)
  * 
- * Last Modified: 28th May 2022 9:35:26 am
+ * Last Modified: 29th May 2022 11:19:20 pm
  * Modified By: Paul Ribault (pribault.dev@gmail.com)
  */
 
@@ -38,23 +38,19 @@
 */
 
 // RxCW
-#include "Completable.h"
-#include "StreamBase.h"
+#include "RxCW/Single.h"
 
 // stl
-#include <functional>
+#include <string>
 
 /*
 ****************
 ** class used **
 ****************
 */
-
 namespace	RxCW
 {
-	class	Completable;
-	template	<typename T>
-	class	WriteStream;
+	class	AsyncFile;
 }
 
 /*
@@ -65,8 +61,11 @@ namespace	RxCW
 
 namespace	RxCW
 {
-	template	<typename T>
-	class	ReadStream : public StreamBase<T>
+	/**
+	 * @class FileSystem FileSystem.h RxCW/FileSystem.h
+	 * @brief Utility class to asynchronously manipulate the file system.
+	 */
+	class	FileSystem
 	{
 
 		/*
@@ -77,17 +76,6 @@ namespace	RxCW
 
 		public:
 
-			template<typename> friend class	ReadStream;
-
-			/*
-			***********
-			** types **
-			***********
-			*/
-
-			typedef std::function<void()>			EndFunction;
-			typedef std::function<void(const T&)>	DataFunction;
-
 			/*
 			*************
 			** methods **
@@ -95,41 +83,33 @@ namespace	RxCW
 			*/
 
 			/**
-			 * Destructor
+			 * @brief Destroy the File System object
 			 */
-			virtual ~ReadStream(void);
-
-			virtual void	endHandler(const EndFunction& handler) = 0;
-			virtual void	handler(const DataFunction& handler) = 0;
-
-			virtual void		pause() = 0;
-			virtual void		resume() = 0;
-			virtual Completable	rxPipeTo(WriteStream<T>& writeStream);
-
-		/*
-		************************************************************************
-		******************************* PROTECTED ******************************
-		************************************************************************
-		*/
-
-		protected:
-
-			/*
-			*************
-			** methods **
-			*************
-			*/
+			virtual ~FileSystem(void);
 
 			/**
-			 * Constructor
+			 * @brief Open the given file with the specified modes.
+			 * 
+			 * @param fileName The file to open.
+			 * @param mode The mode to open the file with.
+			 * @return AsyncFile* The resulting object to manipulate the file with. Can be:\n
+			 *  - @b r: Open the file for reading, does not create the file if it does not already exists.\n
+			 *  - @b w: Create a file for writing, truncate the file if it already exists, create it otherwise.\n
+			 *  - @b a: Append to a file, create it if it does not already exists.\n
+			 *  - @b r+: Open a file for read/write, does not create the file if it does not already exists.\n
+			 *  - @b w+: Create a file for read/write, truncate the file if it already exists, create it otherwise.\n
+			 *  - @b a+: Open a file for read/write, writings will be appended to the file. Create the file if it does not already exists.\n
 			 */
-			ReadStream(void);
+			static AsyncFile*			open(const std::string& fileName, const std::string& mode);
 
-			/*
-			****************
-			** attributes **
-			****************
-			*/
+			/**
+			 * @brief The reactive version of the @ref open method.
+			 * 
+			 * @param fileName The file to open.
+			 * @param mode The mode to open the file with.
+			 * @return Single<AsyncFile*> The resulting Single.
+			 */
+			static Single<AsyncFile*>	rxOpen(const std::string& fileName, const std::string& mode);
 
 		/*
 		************************************************************************
@@ -139,7 +119,16 @@ namespace	RxCW
 
 		private:
 
+			/*
+			*************
+			** methods **
+			*************
+			*/
+
+			/**
+			 * @brief Construct a new File System object
+			 */
+			FileSystem(void);
+
 	};
 }
-
-#include <ReadStream.inl>

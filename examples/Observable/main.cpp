@@ -35,7 +35,7 @@
 **************
 */
 
-#include <Observable.h>
+#include <RxCW/Observable.h>
 
 #include <string>
 
