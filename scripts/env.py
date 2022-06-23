@@ -14,7 +14,7 @@ examplesBuildDir = os.path.join(examplesDir, "build")
 if "VCPKG_PATH" not in os.environ:
 	print("environment variable VCPKG_PATH not set")
 	vcpkgPath = ""
-else
+else:
 	vcpkgPath = os.environ["VCPKG_PATH"]
 
 print("root: %s" % rootDir)
