@@ -68,6 +68,7 @@ int		main(int argc, char **argv)
 	log("===== START =====");
 
 	FileSystem::rxExists("hello_world.txt")
+		.observeOn(rxcpp::observe_on_new_thread())
 		.flatMapCompletable([](bool exists)
 		{
 			log("file exists: " + std::to_string(exists));
@@ -112,13 +113,13 @@ int		main(int argc, char **argv)
 outputs:
 
 ```
-21:42:42 - [thread 35128] : ===== START =====
-21:42:42 - [thread 35128] : file exists: 1
-21:42:42 - [thread 35128] : file created and ready for writing !
-21:42:42 - [thread 35128] : wrote some data
-21:42:42 - [thread 35128] : closing file
-21:42:42 - [thread 35128] : ended without error!
-21:42:42 - [thread 35128] : ===== END =====
+21:42:42 - [thread 2008] : ===== START =====
+21:42:42 - [thread 16608] : file exists: 0
+21:42:42 - [thread 16608] : file created and ready for writing !
+21:42:42 - [thread 16608] : wrote some data
+21:42:42 - [thread 16608] : closing file
+21:42:42 - [thread 16608] : ended without error!
+21:42:42 - [thread 16608] : ===== END =====
 ```
 
 One of the main interests of the reactive approach here is to have a powerfull asynchronous code that stays human friendly, and less prone to errors than standard c++.
