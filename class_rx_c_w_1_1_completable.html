@@ -126,6 +126,9 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:afd80536e833f73030d32b3344e21295d"><td class="memItemLeft" align="right" valign="top"><a class="el" href="class_rx_c_w_1_1_completable.html">Completable</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_rx_c_w_1_1_completable.html#afd80536e833f73030d32b3344e21295d">doOnError</a> (const <a class="el" href="class_rx_c_w_1_1_completable.html#ab64c4c862503705deec118b30c8da34d">ErrorFunction</a> &amp;onError)</td></tr>
 <tr class="memdesc:afd80536e833f73030d32b3344e21295d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Calls the given function on this <a class="el" href="class_rx_c_w_1_1_completable.html" title="Represents an asynchronous object that can either complete or fail.">Completable</a> error.  <a href="class_rx_c_w_1_1_completable.html#afd80536e833f73030d32b3344e21295d">More...</a><br /></td></tr>
 <tr class="separator:afd80536e833f73030d32b3344e21295d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:adca3082d8eaaefa2fe92cc56de7899a8"><td class="memItemLeft" align="right" valign="top"><a class="el" href="class_rx_c_w_1_1_completable.html">Completable</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_rx_c_w_1_1_completable.html#adca3082d8eaaefa2fe92cc56de7899a8">doOnTerminate</a> (const <a class="el" href="class_rx_c_w_1_1_completable.html#adf2bf6c2422fba7d90b9e76f9f078df3">CompleteFunction</a> &amp;onTerminate)</td></tr>
+<tr class="memdesc:adca3082d8eaaefa2fe92cc56de7899a8"><td class="mdescLeft">&#160;</td><td class="mdescRight">Calls the given function on this <a class="el" href="class_rx_c_w_1_1_completable.html" title="Represents an asynchronous object that can either complete or fail.">Completable</a> end.  <a href="class_rx_c_w_1_1_completable.html#adca3082d8eaaefa2fe92cc56de7899a8">More...</a><br /></td></tr>
+<tr class="separator:adca3082d8eaaefa2fe92cc56de7899a8"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ad87d3871c555ec5235c913451e94b4f9"><td class="memItemLeft" align="right" valign="top"><a class="el" href="class_rx_c_w_1_1_completable.html">Completable</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_rx_c_w_1_1_completable.html#ad87d3871c555ec5235c913451e94b4f9">observeOn</a> (rxcpp::observe_on_one_worker coordination)</td></tr>
 <tr class="memdesc:ad87d3871c555ec5235c913451e94b4f9"><td class="mdescLeft">&#160;</td><td class="mdescRight">All values are queued and delivered using the given rxcpp coordination.  <a href="class_rx_c_w_1_1_completable.html#ad87d3871c555ec5235c913451e94b4f9">More...</a><br /></td></tr>
 <tr class="separator:ad87d3871c555ec5235c913451e94b4f9"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -357,6 +360,33 @@ template&lt;typename &gt; </td></tr>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">onError</td><td>The function to call. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd><a class="el" href="class_rx_c_w_1_1_completable.html" title="Represents an asynchronous object that can either complete or fail.">Completable</a> The resulting <a class="el" href="class_rx_c_w_1_1_completable.html" title="Represents an asynchronous object that can either complete or fail.">Completable</a>. </dd></dl>
+
+</div>
+</div>
+<a id="adca3082d8eaaefa2fe92cc56de7899a8"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#adca3082d8eaaefa2fe92cc56de7899a8">&#9670;&nbsp;</a></span>doOnTerminate()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="class_rx_c_w_1_1_completable.html">Completable</a> RxCW::Completable::doOnTerminate </td>
+          <td>(</td>
+          <td class="paramtype">const <a class="el" href="class_rx_c_w_1_1_completable.html#adf2bf6c2422fba7d90b9e76f9f078df3">CompleteFunction</a> &amp;&#160;</td>
+          <td class="paramname"><em>onTerminate</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Calls the given function on this <a class="el" href="class_rx_c_w_1_1_completable.html" title="Represents an asynchronous object that can either complete or fail.">Completable</a> end. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">onTerminate</td><td>The function to call. </td></tr>
   </table>
   </dd>
 </dl>

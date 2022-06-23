@@ -118,6 +118,9 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:a3baa6c85328c75fea396be5961e3298f"><td class="memItemLeft" align="right" valign="top"><a class="el" href="class_rx_c_w_1_1_single.html">Single</a>&lt; T &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_rx_c_w_1_1_single.html#a3baa6c85328c75fea396be5961e3298f">doOnComplete</a> (const <a class="el" href="class_rx_c_w_1_1_single.html#aecb9c2c08385c74a4141f7a0c15e0d31">CompleteFunction</a> &amp;onComplete)</td></tr>
 <tr class="memdesc:a3baa6c85328c75fea396be5961e3298f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Calls the given function on this <a class="el" href="class_rx_c_w_1_1_single.html" title="Represents an asynchronous object that can fail or complete with a value.">Single</a> completion.  <a href="class_rx_c_w_1_1_single.html#a3baa6c85328c75fea396be5961e3298f">More...</a><br /></td></tr>
 <tr class="separator:a3baa6c85328c75fea396be5961e3298f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aff686582e2263c8109e2016129964f55"><td class="memItemLeft" align="right" valign="top"><a class="el" href="class_rx_c_w_1_1_single.html">Single</a>&lt; T &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_rx_c_w_1_1_single.html#aff686582e2263c8109e2016129964f55">doOnTerminate</a> (const <a class="el" href="class_rx_c_w_1_1_single.html#aecb9c2c08385c74a4141f7a0c15e0d31">CompleteFunction</a> &amp;onTerminate)</td></tr>
+<tr class="memdesc:aff686582e2263c8109e2016129964f55"><td class="mdescLeft">&#160;</td><td class="mdescRight">Calls the given function on this <a class="el" href="class_rx_c_w_1_1_single.html" title="Represents an asynchronous object that can fail or complete with a value.">Single</a> end.  <a href="class_rx_c_w_1_1_single.html#aff686582e2263c8109e2016129964f55">More...</a><br /></td></tr>
+<tr class="separator:aff686582e2263c8109e2016129964f55"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ab70a51241ec2af5e612f483ad740afa4"><td class="memItemLeft" align="right" valign="top"><a class="el" href="class_rx_c_w_1_1_maybe.html">Maybe</a>&lt; T &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_rx_c_w_1_1_single.html#ab70a51241ec2af5e612f483ad740afa4">toMaybe</a> ()</td></tr>
 <tr class="memdesc:ab70a51241ec2af5e612f483ad740afa4"><td class="mdescLeft">&#160;</td><td class="mdescRight">Convert this <a class="el" href="class_rx_c_w_1_1_single.html" title="Represents an asynchronous object that can fail or complete with a value.">Single</a> to a <a class="el" href="class_rx_c_w_1_1_maybe.html" title="Represents an asynchronous object that can, fail, complete with a value or complete with no value at ...">Maybe</a>.  <a href="class_rx_c_w_1_1_single.html#ab70a51241ec2af5e612f483ad740afa4">More...</a><br /></td></tr>
 <tr class="separator:ab70a51241ec2af5e612f483ad740afa4"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -394,6 +397,33 @@ template&lt;typename &gt; </td></tr>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">onError</td><td>The function to call. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd><a class="el" href="class_rx_c_w_1_1_single.html" title="Represents an asynchronous object that can fail or complete with a value.">Single</a> The resulting <a class="el" href="class_rx_c_w_1_1_single.html" title="Represents an asynchronous object that can fail or complete with a value.">Single</a>. </dd></dl>
+
+</div>
+</div>
+<a id="aff686582e2263c8109e2016129964f55"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aff686582e2263c8109e2016129964f55">&#9670;&nbsp;</a></span>doOnTerminate()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="class_rx_c_w_1_1_single.html">Single</a>&lt;T&gt; RxCW::Single::doOnTerminate </td>
+          <td>(</td>
+          <td class="paramtype">const <a class="el" href="class_rx_c_w_1_1_single.html#aecb9c2c08385c74a4141f7a0c15e0d31">CompleteFunction</a> &amp;&#160;</td>
+          <td class="paramname"><em>onTerminate</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Calls the given function on this <a class="el" href="class_rx_c_w_1_1_single.html" title="Represents an asynchronous object that can fail or complete with a value.">Single</a> end. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">onTerminate</td><td>The function to call. </td></tr>
   </table>
   </dd>
 </dl>

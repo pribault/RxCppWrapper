@@ -123,6 +123,9 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:a53c65c0e6b6d1b9f3ec0d6d1c4bc32c5"><td class="memItemLeft" align="right" valign="top"><a class="el" href="class_rx_c_w_1_1_observable.html">Observable</a>&lt; T &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_rx_c_w_1_1_observable.html#a53c65c0e6b6d1b9f3ec0d6d1c4bc32c5">doOnComplete</a> (const <a class="el" href="class_rx_c_w_1_1_observable.html#af642f79e71ccc1f2fe0775b7a4c212af">CompleteFunction</a> &amp;onComplete)</td></tr>
 <tr class="memdesc:a53c65c0e6b6d1b9f3ec0d6d1c4bc32c5"><td class="mdescLeft">&#160;</td><td class="mdescRight">Calls the given function on this <a class="el" href="class_rx_c_w_1_1_observable.html" title="Represents an asynchronous object that can handle a flow of data, complete or fail.">Observable</a> completion.  <a href="class_rx_c_w_1_1_observable.html#a53c65c0e6b6d1b9f3ec0d6d1c4bc32c5">More...</a><br /></td></tr>
 <tr class="separator:a53c65c0e6b6d1b9f3ec0d6d1c4bc32c5"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab5e670b73f31e84766893a97dc06c40c"><td class="memItemLeft" align="right" valign="top"><a class="el" href="class_rx_c_w_1_1_observable.html">Observable</a>&lt; T &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_rx_c_w_1_1_observable.html#ab5e670b73f31e84766893a97dc06c40c">doOnTerminate</a> (const <a class="el" href="class_rx_c_w_1_1_observable.html#af642f79e71ccc1f2fe0775b7a4c212af">CompleteFunction</a> &amp;onTerminate)</td></tr>
+<tr class="memdesc:ab5e670b73f31e84766893a97dc06c40c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Calls the given function on this <a class="el" href="class_rx_c_w_1_1_observable.html" title="Represents an asynchronous object that can handle a flow of data, complete or fail.">Observable</a> end.  <a href="class_rx_c_w_1_1_observable.html#ab5e670b73f31e84766893a97dc06c40c">More...</a><br /></td></tr>
+<tr class="separator:ab5e670b73f31e84766893a97dc06c40c"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:af29661e88a5ce29e7245cfb494d79698"><td class="memItemLeft" align="right" valign="top"><a class="el" href="class_rx_c_w_1_1_observable.html">Observable</a>&lt; T &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_rx_c_w_1_1_observable.html#af29661e88a5ce29e7245cfb494d79698">observeOn</a> (rxcpp::observe_on_one_worker coordination)</td></tr>
 <tr class="memdesc:af29661e88a5ce29e7245cfb494d79698"><td class="mdescLeft">&#160;</td><td class="mdescRight">All values are queued and delivered using the given rxcpp coordination.  <a href="class_rx_c_w_1_1_observable.html#af29661e88a5ce29e7245cfb494d79698">More...</a><br /></td></tr>
 <tr class="separator:af29661e88a5ce29e7245cfb494d79698"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -403,6 +406,35 @@ template&lt;typename T &gt; </div>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">onError</td><td>The function to call. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd><a class="el" href="class_rx_c_w_1_1_observable.html" title="Represents an asynchronous object that can handle a flow of data, complete or fail.">Observable</a> The resulting <a class="el" href="class_rx_c_w_1_1_observable.html" title="Represents an asynchronous object that can handle a flow of data, complete or fail.">Observable</a>. </dd></dl>
+
+</div>
+</div>
+<a id="ab5e670b73f31e84766893a97dc06c40c"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ab5e670b73f31e84766893a97dc06c40c">&#9670;&nbsp;</a></span>doOnTerminate()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename T &gt; </div>
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="class_rx_c_w_1_1_observable.html">Observable</a>&lt;T&gt; <a class="el" href="class_rx_c_w_1_1_observable.html">RxCW::Observable</a>&lt; T &gt;::doOnTerminate </td>
+          <td>(</td>
+          <td class="paramtype">const <a class="el" href="class_rx_c_w_1_1_observable.html#af642f79e71ccc1f2fe0775b7a4c212af">CompleteFunction</a> &amp;&#160;</td>
+          <td class="paramname"><em>onTerminate</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Calls the given function on this <a class="el" href="class_rx_c_w_1_1_observable.html" title="Represents an asynchronous object that can handle a flow of data, complete or fail.">Observable</a> end. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">onTerminate</td><td>The function to call. </td></tr>
   </table>
   </dd>
 </dl>
