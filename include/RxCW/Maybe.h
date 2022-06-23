@@ -190,6 +190,14 @@ namespace	RxCW
 			Maybe<T>		doOnComplete(const CompleteFunction& onComplete);
 
 			/**
+			 * @brief Calls the given function on this Maybe end.
+			 * 
+			 * @param onTerminate The function to call.
+			 * @return Maybe The resulting Maybe.
+			 */
+			Maybe<T>		doOnTerminate(const CompleteFunction& onTerminate);
+
+			/**
 			 * @brief Asynchronously check if a Maybe is empty.
 			 * 
 			 * @return \b true: if the Maybe is empty.

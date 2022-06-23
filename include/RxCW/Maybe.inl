@@ -128,7 +128,7 @@ template	<typename T>
 RxCW::Maybe<T>		RxCW::Maybe<T>::doOnSuccess(const SuccessFunction& onSuccess)
 {
 	return Maybe<T>(_observable->tap(
-		[](T value){
+		[onSuccess](T value){
 			onSuccess(value);
 		}
 	));
@@ -149,18 +149,27 @@ template	<typename T>
 RxCW::Maybe<T>		RxCW::Maybe<T>::doOnComplete(const CompleteFunction& onComplete)
 {
 	return Maybe<T>(_observable->tap(
-		[](T)
-		{
-		},
-		[onComplete](std::exception_ptr e)
-		{
-			onComplete();
-		},
 		[onComplete]()
 		{
 			onComplete();
 		}
 	));
+}
+
+template	<typename T>
+RxCW::Maybe<T>		RxCW::Maybe<T>::doOnTerminate(const CompleteFunction& onTerminate)
+{
+		[](T)
+		{
+		},
+		[onTerminate](std::exception_ptr e)
+		{
+			onTerminate();
+		},
+		[onTerminate]()
+		{
+			onTerminate();
+		}
 }
 
 template	<typename T>
@@ -240,10 +249,9 @@ void				RxCW::Maybe<T>::subscribe(const SuccessFunction& onSuccess, const ErrorF
 		{
 			onSuccess(value);
 		},
-		[onError, onComplete](std::exception_ptr e)
+		[onError](std::exception_ptr e)
 		{
 			onError(e);
-			onComplete();
 		},
 		[onComplete]()
 		{

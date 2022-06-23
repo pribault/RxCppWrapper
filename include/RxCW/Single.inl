@@ -114,7 +114,7 @@ template	<typename T>
 RxCW::Single<T>		RxCW::Single<T>::doOnSuccess(const SuccessFunction& onSuccess)
 {
 	return Single<T>(_observable->tap(
-		[](T value){
+		[onSuccess](T value){
 			onSuccess(value);
 		}
 	));
@@ -135,16 +135,27 @@ template	<typename T>
 RxCW::Single<T>		RxCW::Single<T>::doOnComplete(const CompleteFunction& onComplete)
 {
 	return Single<T>(_observable->tap(
-		[](T)
-		{
-		},
-		[onComplete](std::exception_ptr e)
-		{
-			onComplete();
-		},
 		[onComplete]()
 		{
 			onComplete();
+		}
+	));
+}
+
+template	<typename T>
+RxCW::Single<T>		RxCW::Single<T>::doOnTerminate(const CompleteFunction& onTerminate)
+{
+	return Single<T>(_observable->tap(
+		[](T)
+		{
+		},
+		[onTerminate](std::exception_ptr e)
+		{
+			onTerminate();
+		},
+		[onTerminate]()
+		{
+			onTerminate();
 		}
 	));
 }
@@ -214,10 +225,9 @@ void				RxCW::Single<T>::subscribe(const SuccessFunction& onSuccess, const Error
 		{
 			onSuccess(value);
 		},
-		[onError, onComplete](std::exception_ptr e)
+		[onError](std::exception_ptr e)
 		{
 			onError(e);
-			onComplete();
 		},
 		[onComplete]()
 		{

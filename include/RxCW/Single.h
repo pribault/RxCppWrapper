@@ -184,6 +184,14 @@ namespace	RxCW
 			Single<T>		doOnComplete(const CompleteFunction& onComplete);
 
 			/**
+			 * @brief Calls the given function on this Single end.
+			 * 
+			 * @param onTerminate The function to call.
+			 * @return Single The resulting Single.
+			 */
+			Single<T>		doOnTerminate(const CompleteFunction& onTerminate);
+
+			/**
 			 * @brief Convert this Single to a Maybe.
 			 * 
 			 * @return Maybe The resulting Maybe.

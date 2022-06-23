@@ -171,18 +171,27 @@ template	<typename T>
 RxCW::Observable<T>		RxCW::Observable<T>::doOnComplete(const CompleteFunction& onComplete)
 {
 	return Observable<T>(_observable->tap(
-		[](T)
-		{
-		},
-		[onComplete](std::exception_ptr e)
-		{
-			onComplete();
-		},
 		[onComplete]()
 		{
 			onComplete();
 		}
 	));
+}
+
+template	<typename T>
+RxCW::Observable<T>		RxCW::Observable<T>::doOnTerminate(const CompleteFunction& onTerminate)
+{
+		[](T)
+		{
+		},
+		[onTerminate](std::exception_ptr e)
+		{
+			onTerminate();
+		},
+		[onTerminate]()
+		{
+			onTerminate();
+		}
 }
 
 template	<typename T>
@@ -198,6 +207,36 @@ RxCW::Observable<T>		RxCW::Observable<T>::subscribeOn(rxcpp::synchronize_in_one_
 }
 
 template	<typename T>
+void				RxCW::Observable<T>::subscribe()
+{
+	subscribe(nullptr, nullptr, nullptr);
+}
+
+template	<typename T>
+void				RxCW::Observable<T>::subscribe(const SuccessFunction& onSuccess)
+{
+	subscribe(onSuccess, nullptr, nullptr);
+}
+
+template	<typename T>
+void				RxCW::Observable<T>::subscribe(const ErrorFunction& onError)
+{
+	subscribe(nullptr, onError, nullptr);
+}
+
+template	<typename T>
+void				RxCW::Observable<T>::subscribe(const CompleteFunction& onComplete)
+{
+	subscribe(nullptr, nullptr, onComplete);
+}
+
+template	<typename T>
+void				RxCW::Observable<T>::subscribe(const SuccessFunction& onSuccess, const ErrorFunction& onError)
+{
+	subscribe(onSuccess, onError, nullptr);
+}
+
+template	<typename T>
 void				RxCW::Observable<T>::subscribe(const SuccessFunction& onSuccess, const ErrorFunction& onError, const CompleteFunction& onComplete)
 {
 	_observable->subscribe(
@@ -205,10 +244,9 @@ void				RxCW::Observable<T>::subscribe(const SuccessFunction& onSuccess, const E
 		{
 			onSuccess(value);
 		},
-		[onError, onComplete](std::exception_ptr e)
+		[onError](std::exception_ptr e)
 		{
 			onError(e);
-			onComplete();
 		},
 		[onComplete]()
 		{

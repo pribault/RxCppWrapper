@@ -189,6 +189,14 @@ namespace	RxCW
 			Completable		doOnError(const ErrorFunction& onError);
 
 			/**
+			 * @brief Calls the given function on this Completable end.
+			 * 
+			 * @param onTerminate The function to call.
+			 * @return Completable The resulting Completable.
+			 */
+			Completable		doOnTerminate(const CompleteFunction& onTerminate);
+
+			/**
 			 * @brief All values are queued and delivered using the given rxcpp coordination.
 			 * 
 			 * @param coordination The rxcpp coordination.

@@ -158,6 +158,23 @@ Completable		Completable::doOnError(const ErrorFunction& onError)
 	));
 }
 
+Completable		Completable::doOnTerminate(const CompleteFunction& onTerminate)
+{
+	return Completable(_observable->tap(
+		[](int){
+			// 
+		},
+		[onTerminate](std::exception_ptr)
+		{
+			onTerminate();
+		},
+		[onTerminate]()
+		{
+			onTerminate();
+		}
+	));
+}
+
 Completable		Completable::observeOn(rxcpp::observe_on_one_worker coordination)
 {
 	return Completable(_observable->observe_on(coordination));

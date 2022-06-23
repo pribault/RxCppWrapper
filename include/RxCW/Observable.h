@@ -232,6 +232,14 @@ namespace	RxCW
 			Observable<T>		doOnComplete(const CompleteFunction& onComplete);
 
 			/**
+			 * @brief Calls the given function on this Observable end.
+			 * 
+			 * @param onTerminate The function to call.
+			 * @return Observable The resulting Observable.
+			 */
+			Observable<T>		doOnTerminate(const CompleteFunction& onTerminate);
+
+			/**
 			 * @brief All values are queued and delivered using the given rxcpp coordination.
 			 * 
 			 * @param coordination The rxcpp coordination.
