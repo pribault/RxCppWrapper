@@ -3,6 +3,10 @@
 import os
 from env import *
 
+# Make sure build directory exists
+if not os.path.exists(buildDir):
+	os.mkdir(buildDir)
+
 # save working directory
 workDir = os.getcwd()
 # move to root
