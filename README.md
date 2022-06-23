@@ -16,6 +16,10 @@ https://github.com/ReactiveX/RxJava
 
 https://github.com/ReactiveX/RxCpp
 
+## Documentation
+
+The doxygen documentation can be found at: https://pribault.github.io/RxCppWrapper/index.html
+
 ## Dependencies
 
 This library uses the following dependencies:
