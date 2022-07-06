@@ -38,8 +38,8 @@
 */
 
 // RxCW
-#include "RxCW/ReadStream.h"
-#include "RxCW/WriteStream.h"
+#include <RxCW/ReadStream.h>
+#include <RxCW/WriteStream.h>
 
 // stl
 #include <string>

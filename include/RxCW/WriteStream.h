@@ -38,8 +38,8 @@
 */
 
 // RxCW
-#include "RxCW/Completable.h"
-#include "RxCW/StreamBase.h"
+#include <RxCW/Completable.h>
+#include <RxCW/StreamBase.h>
 
 // stl
 #include <functional>

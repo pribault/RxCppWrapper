@@ -65,6 +65,7 @@ namespace	RxCW
 
 			template<typename> friend class	Maybe;
 			template<typename> friend class	Single;
+			template<typename> friend class	Observable;
 
 			/*
 			***********
@@ -148,6 +149,33 @@ namespace	RxCW
 			 * @return Completable The resulting Completable.
 			 */
 			Completable		andThen(Completable& other);
+
+			/**
+			 * @brief Returns a Single that will run this Completable first, and then the given Single.
+			 * 
+			 * @param other The Single to run after this one.
+			 * @return Single The resulting Single.
+			 */
+			template	<typename T>
+			Single<T>	andThen(Single<T>& other);
+
+			/**
+			 * @brief Returns a Maybe that will run this Completable first, and then the given Maybe.
+			 * 
+			 * @param other The Maybe to run after this one.
+			 * @return Maybe The resulting Maybe.
+			 */
+			template	<typename T>
+			Maybe<T>	andThen(Maybe<T>& other);
+
+			/**
+			 * @brief Returns a Observable that will run this Completable first, and then the given Observable.
+			 * 
+			 * @param other The Observable to run after this one.
+			 * @return Observable The resulting Observable.
+			 */
+			template	<typename T>
+			Observable<T>	andThen(Observable<T>& other);
 
 			/**
 			 * @brief Repeat this Completable infinitely.
@@ -286,3 +314,5 @@ namespace	RxCW
 
 	};
 }
+
+#include <RxCW/Completable.inl>

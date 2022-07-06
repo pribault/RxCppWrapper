@@ -38,8 +38,8 @@
 */
 
 // RxCW
-#include "RxCW/Completable.h"
-#include "RxCW/Single.h"
+#include <RxCW/Completable.h>
+#include <RxCW/Single.h>
 
 // stl
 #include <string>

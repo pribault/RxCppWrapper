@@ -79,6 +79,7 @@ namespace	RxCW
 
 		public:
 
+			friend class					Completable;
 			template<typename> friend class	Observable;
 
 			/*
