@@ -123,6 +123,14 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:aa39c36338d00f2f0c7e84f21494bb115"><td class="memTemplItemLeft" align="right" valign="top"><a class="el" href="class_rx_c_w_1_1_observable.html">Observable</a>&lt; T &gt;&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="class_rx_c_w_1_1_completable.html#aa39c36338d00f2f0c7e84f21494bb115">andThen</a> (<a class="el" href="class_rx_c_w_1_1_observable.html">Observable</a>&lt; T &gt; &amp;other)</td></tr>
 <tr class="memdesc:aa39c36338d00f2f0c7e84f21494bb115"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns a <a class="el" href="class_rx_c_w_1_1_observable.html" title="Represents an asynchronous object that can handle a flow of data, complete or fail.">Observable</a> that will run this <a class="el" href="class_rx_c_w_1_1_completable.html" title="Represents an asynchronous object that can either complete or fail.">Completable</a> first, and then the given <a class="el" href="class_rx_c_w_1_1_observable.html" title="Represents an asynchronous object that can handle a flow of data, complete or fail.">Observable</a>.  <a href="class_rx_c_w_1_1_completable.html#aa39c36338d00f2f0c7e84f21494bb115">More...</a><br /></td></tr>
 <tr class="separator:aa39c36338d00f2f0c7e84f21494bb115"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aa338c78d225a75ae6cdcb63a9db08888"><td class="memTemplParams" colspan="2">template&lt;typename ... Args&gt; </td></tr>
+<tr class="memitem:aa338c78d225a75ae6cdcb63a9db08888"><td class="memTemplItemLeft" align="right" valign="top"><a class="el" href="class_rx_c_w_1_1_completable.html">Completable</a>&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="class_rx_c_w_1_1_completable.html#aa338c78d225a75ae6cdcb63a9db08888">merge</a> (Args ... completables)</td></tr>
+<tr class="memdesc:aa338c78d225a75ae6cdcb63a9db08888"><td class="mdescLeft">&#160;</td><td class="mdescRight">Merge all Completables into one, those Completables will be subscribed at the same time and the resulting <a class="el" href="class_rx_c_w_1_1_completable.html" title="Represents an asynchronous object that can either complete or fail.">Completable</a> will only complete after all the merged Completables.  <a href="class_rx_c_w_1_1_completable.html#aa338c78d225a75ae6cdcb63a9db08888">More...</a><br /></td></tr>
+<tr class="separator:aa338c78d225a75ae6cdcb63a9db08888"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a0cfd711d599d5f6b00aa2656fcad8d87"><td class="memTemplParams" colspan="2">template&lt;typename ... Args&gt; </td></tr>
+<tr class="memitem:a0cfd711d599d5f6b00aa2656fcad8d87"><td class="memTemplItemLeft" align="right" valign="top"><a class="el" href="class_rx_c_w_1_1_completable.html">Completable</a>&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="class_rx_c_w_1_1_completable.html#a0cfd711d599d5f6b00aa2656fcad8d87">concat</a> (Args ... completables)</td></tr>
+<tr class="memdesc:a0cfd711d599d5f6b00aa2656fcad8d87"><td class="mdescLeft">&#160;</td><td class="mdescRight">Concatenate all Completables, all of them will be subscribed one after another. The resulting <a class="el" href="class_rx_c_w_1_1_completable.html" title="Represents an asynchronous object that can either complete or fail.">Completable</a> will complete only after all of them.  <a href="class_rx_c_w_1_1_completable.html#a0cfd711d599d5f6b00aa2656fcad8d87">More...</a><br /></td></tr>
+<tr class="separator:a0cfd711d599d5f6b00aa2656fcad8d87"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a7481e1eea9680ed7859372b58102730e"><td class="memItemLeft" align="right" valign="top"><a class="el" href="class_rx_c_w_1_1_completable.html">Completable</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_rx_c_w_1_1_completable.html#a7481e1eea9680ed7859372b58102730e">repeat</a> ()</td></tr>
 <tr class="memdesc:a7481e1eea9680ed7859372b58102730e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Repeat this <a class="el" href="class_rx_c_w_1_1_completable.html" title="Represents an asynchronous object that can either complete or fail.">Completable</a> infinitely.  <a href="class_rx_c_w_1_1_completable.html#a7481e1eea9680ed7859372b58102730e">More...</a><br /></td></tr>
 <tr class="separator:a7481e1eea9680ed7859372b58102730e"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -346,6 +354,35 @@ template&lt;typename T &gt; </div>
 
 </div>
 </div>
+<a id="a0cfd711d599d5f6b00aa2656fcad8d87"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a0cfd711d599d5f6b00aa2656fcad8d87">&#9670;&nbsp;</a></span>concat()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename ... Args&gt; </div>
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="class_rx_c_w_1_1_completable.html">Completable</a> RxCW::Completable::concat </td>
+          <td>(</td>
+          <td class="paramtype">Args ...&#160;</td>
+          <td class="paramname"><em>completables</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Concatenate all Completables, all of them will be subscribed one after another. The resulting <a class="el" href="class_rx_c_w_1_1_completable.html" title="Represents an asynchronous object that can either complete or fail.">Completable</a> will complete only after all of them. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">completables</td><td>The completables to concatenate. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd><a class="el" href="class_rx_c_w_1_1_completable.html" title="Represents an asynchronous object that can either complete or fail.">Completable</a> The resulting <a class="el" href="class_rx_c_w_1_1_completable.html" title="Represents an asynchronous object that can either complete or fail.">Completable</a>. </dd></dl>
+
+</div>
+</div>
 <a id="aa7be044a8331253d28b0849b863fedde"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#aa7be044a8331253d28b0849b863fedde">&#9670;&nbsp;</a></span>create()</h2>
 
@@ -525,6 +562,35 @@ template&lt;typename T &gt; </div>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">error</td><td>The error as an exception pointer. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd><a class="el" href="class_rx_c_w_1_1_completable.html" title="Represents an asynchronous object that can either complete or fail.">Completable</a> The resulting <a class="el" href="class_rx_c_w_1_1_completable.html" title="Represents an asynchronous object that can either complete or fail.">Completable</a>. </dd></dl>
+
+</div>
+</div>
+<a id="aa338c78d225a75ae6cdcb63a9db08888"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aa338c78d225a75ae6cdcb63a9db08888">&#9670;&nbsp;</a></span>merge()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename ... Args&gt; </div>
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="class_rx_c_w_1_1_completable.html">Completable</a> RxCW::Completable::merge </td>
+          <td>(</td>
+          <td class="paramtype">Args ...&#160;</td>
+          <td class="paramname"><em>completables</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Merge all Completables into one, those Completables will be subscribed at the same time and the resulting <a class="el" href="class_rx_c_w_1_1_completable.html" title="Represents an asynchronous object that can either complete or fail.">Completable</a> will only complete after all the merged Completables. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">completables</td><td>The completables to merge into one. </td></tr>
   </table>
   </dd>
 </dl>
