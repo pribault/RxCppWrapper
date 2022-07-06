@@ -69,3 +69,19 @@ RxCW::Observable<T>	RxCW::Completable::andThen(RxCW::Observable<T>& other)
 		return *other._observable;
 	}));
 }
+
+template	<typename ... Args>
+RxCW::Completable	RxCW::Completable::merge(Args ... completables)
+{
+	return RxCW::Completable(
+		_observable->merge((*completables._observable)...)
+	);
+}
+
+template	<typename ... Args>
+RxCW::Completable	RxCW::Completable::concat(Args ... completables)
+{
+	return RxCW::Completable(
+		_observable->concat((*completables._observable)...)
+	);
+}

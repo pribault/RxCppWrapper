@@ -178,6 +178,24 @@ namespace	RxCW
 			Observable<T>	andThen(Observable<T>& other);
 
 			/**
+			 * @brief Merge all Completables into one, those Completables will be subscribed at the same time and the resulting Completable will only complete after all the merged Completables.
+			 * 
+			 * @param completables The completables to merge into one.
+			 * @return Completable The resulting Completable.
+			 */
+			template	<typename ... Args>
+			Completable	merge(Args ... completables);
+
+			/**
+			 * @brief Concatenate all Completables, all of them will be subscribed one after another. The resulting Completable will complete only after all of them.
+			 * 
+			 * @param completables The completables to concatenate.
+			 * @return Completable The resulting Completable.
+			 */
+			template	<typename ... Args>
+			Completable	concat(Args ... completables);
+
+			/**
 			 * @brief Repeat this Completable infinitely.
 			 * 
 			 * @return Completable The resulting Completable.
