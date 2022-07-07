@@ -187,17 +187,26 @@ Completable		Completable::subscribeOn(rxcpp::synchronize_in_one_worker coordinat
 
 void			Completable::subscribe()
 {
-	subscribe(nullptr, nullptr);
+	subscribe(
+		[]() {},
+		[](const std::exception_ptr&) {}
+	);
 }
 
 void			Completable::subscribe(const CompleteFunction& onComplete)
 {
-	subscribe(onComplete, nullptr);
+	subscribe(
+		onComplete,
+		[](const std::exception_ptr&) {}
+	);
 }
 
 void			Completable::subscribe(const ErrorFunction& onError)
 {
-	subscribe(nullptr, onError);
+	subscribe(
+		[]() {},
+		onError
+	);
 }
 
 void			Completable::subscribe(const CompleteFunction& onComplete, const ErrorFunction& onError)

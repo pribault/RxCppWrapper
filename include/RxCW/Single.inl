@@ -190,31 +190,51 @@ RxCW::Single<T>		RxCW::Single<T>::subscribeOn(rxcpp::synchronize_in_one_worker c
 template	<typename T>
 void				RxCW::Single<T>::subscribe()
 {
-	subscribe(nullptr, nullptr, nullptr);
+	subscribe(
+		[](T) {},
+		[](const std::exception_ptr&) {},
+		[]() {}
+	);
 }
 
 template	<typename T>
 void				RxCW::Single<T>::subscribe(const SuccessFunction& onSuccess)
 {
-	subscribe(onSuccess, nullptr, nullptr);
+	subscribe(
+		onSuccess,
+		[](const std::exception_ptr&) {},
+		[]() {}
+	);
 }
 
 template	<typename T>
 void				RxCW::Single<T>::subscribe(const ErrorFunction& onError)
 {
-	subscribe(nullptr, onError, nullptr);
+	subscribe(
+		[](T) {},
+		onError,
+		[]() {}
+	);
 }
 
 template	<typename T>
 void				RxCW::Single<T>::subscribe(const CompleteFunction& onComplete)
 {
-	subscribe(nullptr, nullptr, onComplete);
+	subscribe(
+		[](T) {},
+		[](const std::exception_ptr&) {},
+		onComplete
+	);
 }
 
 template	<typename T>
 void				RxCW::Single<T>::subscribe(const SuccessFunction& onSuccess, const ErrorFunction& onError)
 {
-	subscribe(onSuccess, onError, nullptr);
+	subscribe(
+		onSuccess,
+		onError,
+		[]() {}
+	);
 }
 
 template	<typename T>
