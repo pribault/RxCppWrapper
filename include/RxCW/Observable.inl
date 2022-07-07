@@ -35,6 +35,9 @@
 **************
 */
 
+// RxCW
+#include <RxCW/Completable.h>
+
 /*
 ********************************************************************************
 ************************************ METHODS ***********************************
@@ -144,6 +147,19 @@ template	<typename T>
 RxCW::Observable<T>		RxCW::Observable<T>::take_last(size_t count)
 {
 	return Observable<T>(_observable->take_last(count));
+}
+
+template	<typename T>
+RxCW::Completable		RxCW::Observable<T>::ignoreElements()
+{
+	return Completable(_observable->ignore_elements()
+		// use map to change observable type
+		.map(
+			[](T)
+			{
+				return 1;
+			})
+		.switch_if_empty(rxcpp::observable<>::just<int>(1)));
 }
 
 template	<typename T>

@@ -112,7 +112,7 @@ Completable		Completable::error(std::exception_ptr error)
 Completable		Completable::andThen(Completable& other)
 {
 	return Completable(_observable->ignore_elements()
-		.concat(*other._observable));
+		.switch_if_empty(*other._observable));
 }
 
 Completable		Completable::repeat()

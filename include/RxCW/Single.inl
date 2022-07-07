@@ -169,10 +169,14 @@ RxCW::Maybe<T>		RxCW::Single<T>::toMaybe()
 template	<typename T>
 RxCW::Completable	RxCW::Single<T>::ignoreElement()
 {
-	return Completable(_observable->map([](T)
-	{
-		return 1;
-	}));
+	return Completable(_observable->ignore_elements()
+		// use map to change observable type
+		.map(
+			[](T)
+			{
+				return 1;
+			})
+		.switch_if_empty(rxcpp::observable<>::just<int>(1)));
 }
 
 template	<typename T>

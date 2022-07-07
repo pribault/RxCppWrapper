@@ -209,6 +209,13 @@ namespace	RxCW
 			Observable<T>		take_last(size_t count);
 
 			/**
+			 * @brief Convert this Observable to a Completable.
+			 * 
+			 * @return Completable The resulting Completable.
+			 */
+			Completable			ignoreElements();
+
+			/**
 			 * @brief Calls the given function for each Observable value.
 			 * 
 			 * @param onError The function to call.
