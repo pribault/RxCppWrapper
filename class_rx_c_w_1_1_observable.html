@@ -115,6 +115,9 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:aa5d9aa492c90fef282b029b2ba9d14d4"><td class="memItemLeft" align="right" valign="top"><a class="el" href="class_rx_c_w_1_1_observable.html">Observable</a>&lt; T &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_rx_c_w_1_1_observable.html#aa5d9aa492c90fef282b029b2ba9d14d4">take_last</a> (size_t count)</td></tr>
 <tr class="memdesc:aa5d9aa492c90fef282b029b2ba9d14d4"><td class="mdescLeft">&#160;</td><td class="mdescRight">Take the last count values.  <a href="class_rx_c_w_1_1_observable.html#aa5d9aa492c90fef282b029b2ba9d14d4">More...</a><br /></td></tr>
 <tr class="separator:aa5d9aa492c90fef282b029b2ba9d14d4"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aef7b295f5ac888fa1491c3e50a8dab43"><td class="memItemLeft" align="right" valign="top"><a class="el" href="class_rx_c_w_1_1_completable.html">Completable</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_rx_c_w_1_1_observable.html#aef7b295f5ac888fa1491c3e50a8dab43">ignoreElements</a> ()</td></tr>
+<tr class="memdesc:aef7b295f5ac888fa1491c3e50a8dab43"><td class="mdescLeft">&#160;</td><td class="mdescRight">Convert this <a class="el" href="class_rx_c_w_1_1_observable.html" title="Represents an asynchronous object that can handle a flow of data, complete or fail.">Observable</a> to a <a class="el" href="class_rx_c_w_1_1_completable.html" title="Represents an asynchronous object that can either complete or fail.">Completable</a>.  <a href="class_rx_c_w_1_1_observable.html#aef7b295f5ac888fa1491c3e50a8dab43">More...</a><br /></td></tr>
+<tr class="separator:aef7b295f5ac888fa1491c3e50a8dab43"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a1d25153b60f704d958678be1124574e2"><td class="memItemLeft" align="right" valign="top"><a class="el" href="class_rx_c_w_1_1_observable.html">Observable</a>&lt; T &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_rx_c_w_1_1_observable.html#a1d25153b60f704d958678be1124574e2">doOnSuccess</a> (const <a class="el" href="class_rx_c_w_1_1_observable.html#a02d6363fba9406f7453da14c21f113c0">SuccessFunction</a> &amp;onSuccess)</td></tr>
 <tr class="memdesc:a1d25153b60f704d958678be1124574e2"><td class="mdescLeft">&#160;</td><td class="mdescRight">Calls the given function for each <a class="el" href="class_rx_c_w_1_1_observable.html" title="Represents an asynchronous object that can handle a flow of data, complete or fail.">Observable</a> value.  <a href="class_rx_c_w_1_1_observable.html#a1d25153b60f704d958678be1124574e2">More...</a><br /></td></tr>
 <tr class="separator:a1d25153b60f704d958678be1124574e2"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -550,6 +553,28 @@ template&lt;typename R &gt; </div>
   </dd>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd><a class="el" href="class_rx_c_w_1_1_observable.html" title="Represents an asynchronous object that can handle a flow of data, complete or fail.">Observable</a> The resulting <a class="el" href="class_rx_c_w_1_1_observable.html" title="Represents an asynchronous object that can handle a flow of data, complete or fail.">Observable</a>. </dd></dl>
+
+</div>
+</div>
+<a id="aef7b295f5ac888fa1491c3e50a8dab43"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aef7b295f5ac888fa1491c3e50a8dab43">&#9670;&nbsp;</a></span>ignoreElements()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename T &gt; </div>
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="class_rx_c_w_1_1_completable.html">Completable</a> <a class="el" href="class_rx_c_w_1_1_observable.html">RxCW::Observable</a>&lt; T &gt;::ignoreElements </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Convert this <a class="el" href="class_rx_c_w_1_1_observable.html" title="Represents an asynchronous object that can handle a flow of data, complete or fail.">Observable</a> to a <a class="el" href="class_rx_c_w_1_1_completable.html" title="Represents an asynchronous object that can either complete or fail.">Completable</a>. </p>
+<dl class="section return"><dt>Returns</dt><dd><a class="el" href="class_rx_c_w_1_1_completable.html" title="Represents an asynchronous object that can either complete or fail.">Completable</a> The resulting <a class="el" href="class_rx_c_w_1_1_completable.html" title="Represents an asynchronous object that can either complete or fail.">Completable</a>. </dd></dl>
 
 </div>
 </div>
