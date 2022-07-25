@@ -48,6 +48,9 @@
 
 namespace	RxCW
 {
+	class		Completable;
+	template	<typename T>
+	class		Observable;
 	template	<typename T>
 	class		Single;
 }
@@ -80,6 +83,7 @@ namespace	RxCW
 
 			friend class					Completable;
 			template<typename> friend class	Maybe;
+			template<typename> friend class	Observable;
 			template<typename> friend class	Single;
 
 			/*

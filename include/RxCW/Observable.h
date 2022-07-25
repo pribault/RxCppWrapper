@@ -51,6 +51,8 @@ namespace	RxCW
 	class		Completable;
 	template	<typename T>
 	class		Maybe;
+	template	<typename T>
+	class		Single;
 }
 
 /*
@@ -216,6 +218,50 @@ namespace	RxCW
 			Completable			ignoreElements();
 
 			/**
+			 * @brief Returns a Maybe containing the value at the specified index or nothing if that index is out of range.
+			 * 
+			 * @param index The item index.
+			 * @return Maybe<T> The resulting Maybe.
+			 */
+			Maybe<T>			elementAt(size_t index);
+
+			/**
+			 * @brief Returns a Single containing the value at the specified index, or an error if that index is out of range.
+			 * 
+			 * @param index The item index.
+			 * @return Single<T> The resulting Single.
+			 */
+			Single<T>			elementAtOrError(size_t index);
+
+			/**
+			 * @brief Returns a Maybe containing the value of the first item or nothing if that Observable is empty.
+			 * 
+			 * @return Maybe<T> The resulting Maybe.
+			 */
+			Maybe<T>			first();
+
+			/**
+			 * @brief Returns a Single containing the value of the first item or an error if that Observable is empty.
+			 * 
+			 * @return Single<T> The resulting Single.
+			 */
+			Single<T>			firstOrError();
+
+			/**
+			 * @brief Returns a Maybe containing the value of the last item or nothing if that Observable is empty.
+			 * 
+			 * @return Maybe<T> The resulting Maybe.
+			 */
+			Maybe<T>			last();
+
+			/**
+			 * @brief Returns a Single containing the value of the last item or an error if that Observable is empty.
+			 * 
+			 * @return Single<T> The resulting Single.
+			 */
+			Single<T>			lastOrError();
+
+			/**
 			 * @brief Calls the given function for each Observable value.
 			 * 
 			 * @param onError The function to call.
@@ -341,7 +387,7 @@ namespace	RxCW
 			*/
 
 			/**
-			 * @brief Construct a new Single object.
+			 * @brief Construct a new Observable object.
 			 * 
 			 * @param observable The underlying rxcpp observable.
 			 */
@@ -373,7 +419,7 @@ namespace	RxCW
 			*/
 
 			/**
-			 * @brief Construct a new Single object.
+			 * @brief Construct a new Observable object.
 			 */
 			Observable(void);
 

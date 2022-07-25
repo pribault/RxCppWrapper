@@ -37,6 +37,8 @@
 
 // RxCW
 #include <RxCW/Completable.h>
+#include <RxCW/Single.h>
+#include <RxCW/Maybe.h>
 
 /*
 ********************************************************************************
@@ -163,10 +165,49 @@ RxCW::Completable		RxCW::Observable<T>::ignoreElements()
 }
 
 template	<typename T>
+RxCW::Maybe<T>			RxCW::Observable<T>::elementAt(size_t index)
+{
+	return RxCW::Maybe<T>(_observable->element_at(index));
+}
+
+template	<typename T>
+RxCW::Single<T>			RxCW::Observable<T>::elementAtOrError(size_t index)
+{
+	return RxCW::Single<T>(_observable->element_at(index)
+		.switch_if_empty(rxcpp::observable<>::error<T>(make_exception_ptr(std::out_of_range("index " + std::to_string(index) + " out of range")))));
+}
+
+template	<typename T>
+RxCW::Maybe<T>			RxCW::Observable<T>::first()
+{
+	return RxCW::Maybe<T>(_observable->take(1));
+}
+
+template	<typename T>
+RxCW::Single<T>			RxCW::Observable<T>::firstOrError()
+{
+	return RxCW::Single<T>(_observable->take(1)
+		.switch_if_empty(rxcpp::observable<>::error<T>(make_exception_ptr(std::out_of_range("first element out of range (empty Observable)")))));
+}
+
+template	<typename T>
+RxCW::Maybe<T>			RxCW::Observable<T>::last()
+{
+	return RxCW::Maybe<T>(_observable->take_last(1));
+}
+
+template	<typename T>
+RxCW::Single<T>			RxCW::Observable<T>::lastOrError()
+{
+	return RxCW::Single<T>(_observable->take_last(1)
+		.switch_if_empty(rxcpp::observable<>::error<T>(make_exception_ptr(std::out_of_range("last element out of range (empty Observable)")))));
+}
+
+template	<typename T>
 RxCW::Observable<T>		RxCW::Observable<T>::doOnSuccess(const SuccessFunction& onSuccess)
 {
 	return Observable<T>(_observable->tap(
-		[](T value){
+		[onSuccess](T value){
 			onSuccess(value);
 		}
 	));
