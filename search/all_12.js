@@ -1,12 +1,7 @@
 var searchData=
 [
-  ['_7easyncfile_84',['~AsyncFile',['../class_rx_c_w_1_1_async_file.html#a62a2ade5f045108cf274f217b59ca9cb',1,'RxCW::AsyncFile']]],
-  ['_7ecompletable_85',['~Completable',['../class_rx_c_w_1_1_completable.html#aebcc9d9a6c4bdf2bfb0b4f870c5f6c5a',1,'RxCW::Completable']]],
-  ['_7efilesystem_86',['~FileSystem',['../class_rx_c_w_1_1_file_system.html#a4aa9adce2a343ddc4d6e3f872a72a773',1,'RxCW::FileSystem']]],
-  ['_7emaybe_87',['~Maybe',['../class_rx_c_w_1_1_maybe.html#a381d4ba75e2026af2cee7c119e4cda76',1,'RxCW::Maybe']]],
-  ['_7eobservable_88',['~Observable',['../class_rx_c_w_1_1_observable.html#afd863f3e2cbb23b3dd9aed4c8fec1b42',1,'RxCW::Observable']]],
-  ['_7ereadstream_89',['~ReadStream',['../class_rx_c_w_1_1_read_stream.html#aad84ae3ba6add71148a249492e79c8b9',1,'RxCW::ReadStream']]],
-  ['_7esingle_90',['~Single',['../class_rx_c_w_1_1_single.html#a9669d5b5486817ae56c7aef35e5c0b98',1,'RxCW::Single']]],
-  ['_7estreambase_91',['~StreamBase',['../class_rx_c_w_1_1_stream_base.html#ae606d9e7930a06aa14b0263df4126c4d',1,'RxCW::StreamBase']]],
-  ['_7ewritestream_92',['~WriteStream',['../class_rx_c_w_1_1_write_stream.html#ab6b19f133bd68c47cc840b941ebd64cf',1,'RxCW::WriteStream']]]
+  ['write_86',['write',['../class_rx_c_w_1_1_async_file.html#aea577b384193499a2ded6fdb886af031',1,'RxCW::AsyncFile::write()'],['../class_rx_c_w_1_1_write_stream.html#a337dfccc0f5ac2806af2750bd8745185',1,'RxCW::WriteStream::write()']]],
+  ['writequeuefull_87',['writeQueueFull',['../class_rx_c_w_1_1_async_file.html#a75c5738ce6e0b905ac6ce02ed708b4af',1,'RxCW::AsyncFile::writeQueueFull()'],['../class_rx_c_w_1_1_write_stream.html#a25efc3358c39643953faae7fd8a4dfd1',1,'RxCW::WriteStream::writeQueueFull()']]],
+  ['writestream_88',['WriteStream',['../class_rx_c_w_1_1_write_stream.html',1,'RxCW::WriteStream'],['../class_rx_c_w_1_1_write_stream.html#aa6c3633bf8c4093b83657dffb2a12810',1,'RxCW::WriteStream::WriteStream()']]],
+  ['writestream_3c_20std_3a_3astring_20_3e_89',['WriteStream&lt; std::string &gt;',['../class_rx_c_w_1_1_write_stream.html',1,'RxCW']]]
 ];
