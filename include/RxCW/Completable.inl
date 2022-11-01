@@ -49,7 +49,7 @@
 template	<typename T>
 RxCW::Single<T>	RxCW::Completable::andThen(RxCW::Single<T>& other)
 {
-	return RxCW::Single<T>(_observable->take(1).flat_map([other](int) {
+	return RxCW::Single<T>(_observable->flat_map([other](int) {
 		return *other._observable;
 	}));
 }
@@ -57,7 +57,7 @@ RxCW::Single<T>	RxCW::Completable::andThen(RxCW::Single<T>& other)
 template	<typename T>
 RxCW::Maybe<T>	RxCW::Completable::andThen(RxCW::Maybe<T>& other)
 {
-	return RxCW::Maybe<T>(_observable->take(1).flat_map([other](int) {
+	return RxCW::Maybe<T>(_observable->flat_map([other](int) {
 		return *other._observable;
 	}));
 }
@@ -65,7 +65,7 @@ RxCW::Maybe<T>	RxCW::Completable::andThen(RxCW::Maybe<T>& other)
 template	<typename T>
 RxCW::Observable<T>	RxCW::Completable::andThen(RxCW::Observable<T>& other)
 {
-	return RxCW::Observable<T>(_observable->take(1).flat_map([other](int) {
+	return RxCW::Observable<T>(_observable->flat_map([other](int) {
 		return *other._observable;
 	}));
 }
@@ -75,6 +75,17 @@ RxCW::Completable	RxCW::Completable::merge(Args ... completables)
 {
 	return RxCW::Completable(
 		_observable->merge((*completables._observable)...)
+			.reduce(
+				1,
+				[](int, int)
+				{
+					return 1;
+				},
+				[](int)
+				{
+					return 1;
+				}
+			)
 	);
 }
 
@@ -83,5 +94,16 @@ RxCW::Completable	RxCW::Completable::concat(Args ... completables)
 {
 	return RxCW::Completable(
 		_observable->concat((*completables._observable)...)
+			.reduce(
+				1,
+				[](int, int)
+				{
+					return 1;
+				},
+				[](int)
+				{
+					return 1;
+				}
+			)
 	);
 }
