@@ -1,0 +1,77 @@
+name: Test
+
+on:
+  push:
+    branches: [ "develop" ]
+  pull_request:
+    branches: [ "master", "develop" ]
+
+jobs:
+  build:
+    name: ${{ matrix.name }}-${{ github.workflow }}
+    runs-on: ${{ matrix.os }}
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-latest, windows-latest, macos-latest]
+        include:
+          # Common variables
+          - vcpkgCommitId: 253704407ae68efa37bf8f5b59b3e06dd40d3d3f
+          # OS variables
+          - os: windows-latest
+            name: windows
+            vcpkgPath: C:/vcpkg
+            vcpkgTriplet: x64-windows
+          - os: ubuntu-latest
+            name: ubuntu
+            vcpkgPath: /usr/local/share/vcpkg
+            vcpkgTriplet: x64-linux
+          - os: macos-latest
+            name: osx
+            vcpkgPath: /usr/local/share/vcpkg
+            vcpkgTriplet: x64-osx
+
+    env:
+      VCPKG_PATH: ${{ matrix.vcpkgPath }}
+
+    steps:
+
+    - name: Checkout
+      uses: actions/checkout@v3
+
+    - uses: lukka/get-cmake@latest
+
+    - name: Setup vcpkg
+      uses: lukka/run-vcpkg@v10
+      with:
+        vcpkgDirectory: ${{ github.workspace }}/vcpkg
+        vcpkgGitCommitId: ${{ matrix.vcpkgCommitId }}
+
+    - name: Install dependencies
+      run: vcpkg install --triplet=${{ matrix.vcpkgTriplet }} rxcpp gtest
+
+    - name: Configure CMake
+      run: python3 ${{ github.workspace }}/scripts/cmake.py
+
+    - name: Build
+      run: python3 ${{ github.workspace }}/scripts/build.py
+
+    # - name: Run unit tests
+    #   run: python3 ${{ github.workspace }}/scripts/runTests.py
+
+  genDoc:
+    name: generate-documentation-${{ github.workflow }}
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+
+    steps:
+
+    - name: Checkout
+      uses: actions/checkout@v3
+
+    - name: Install dependencies
+      run: sudo apt-get install -y doxygen
+
+    - name: Test doc generation
+      run: python3 ${{ github.workspace }}/scripts/genDoc.py

@@ -7,6 +7,13 @@ if(NOT DEFINED ENABLE_DYNAMIC_LINK)
 	set(ENABLE_DYNAMIC_LINK False)
 endif()
 
+if(ENABLE_DYNAMIC_LINK)
+	if(MSVC)
+		set(CMAKE_WINDOWS_EXPORT_ALL_SYMBOLS TRUE)
+		set(BUILD_SHARED_LIBS TRUE)
+	endif()
+endif()
+
 # Load common cmake
 include(${PROJECT_SOURCE_DIR}/cmake/RxCWCommon.cmake)
 
