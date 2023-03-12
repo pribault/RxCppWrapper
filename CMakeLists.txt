@@ -17,9 +17,6 @@ endif()
 # Load common cmake
 include(${PROJECT_SOURCE_DIR}/cmake/RxCWCommon.cmake)
 
-# Set environment
-rxcw_set_env()
-
 add_subdirectory(examples)
 
 # Find required packages
@@ -49,6 +46,10 @@ set_target_properties(RxCW
 	RUNTIME_OUTPUT_DIRECTORY ${RXCW_OUTPUT_DIR}
 )
 
-target_link_libraries(RxCW PRIVATE rxcpp)
+if(UNIX)
+	target_link_libraries(RxCW PRIVATE rxcpp pthread)
+else()
+	target_link_libraries(RxCW PRIVATE rxcpp)
+endif()
 
 target_compile_features(RxCW PRIVATE cxx_std_17)

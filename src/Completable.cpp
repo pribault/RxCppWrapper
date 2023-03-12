@@ -109,7 +109,7 @@ Completable		Completable::error(std::exception_ptr error)
 	return Completable(rxcpp::observable<>::error<int>(error));
 }
 
-Completable		Completable::andThen(Completable& other)
+Completable		Completable::andThen(const Completable& other)
 {
 	return Completable(_observable->ignore_elements()
 		.switch_if_empty(*other._observable));

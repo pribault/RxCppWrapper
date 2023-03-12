@@ -54,7 +54,7 @@ RxCW::ReadStream<T>::~ReadStream(void)
 template	<typename T>
 RxCW::Completable	RxCW::ReadStream<T>::rxPipeTo(WriteStream<T>& writeStream)
 {
-	return Completable::create([this, &writeStream](Completable::CompleteFunction onComplete, ErrorFunction onError)
+	return Completable::create([this, &writeStream](Completable::CompleteFunction onComplete, Completable::ErrorFunction onError)
 	{
 		writeStream.drainHandler([this]()
 		{

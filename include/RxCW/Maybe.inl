@@ -66,13 +66,13 @@ RxCW::Maybe<T>	RxCW::Maybe<T>::create(const Handler& handler)
 	bool	gotValue = false;
 
 	return Maybe<T>(rxcpp::observable<>::create<T>(
-		[handler](rxcpp::subscriber<T> subscriber)
+		[handler, gotValue](rxcpp::subscriber<T> subscriber)
 	{
 		handler(
-			[subscriber](T value)
+			[subscriber, gotValue](T value)
 		{
 			if (gotValue)
-				throw new std::exception("Maybe doesn't accept multiple values. Use Observable instead");
+				throw std::runtime_error("Maybe doesn't accept multiple values. Use Observable instead");
 			gotValue = true;
 			subscriber.on_next(value);
 		},
@@ -159,6 +159,7 @@ RxCW::Maybe<T>		RxCW::Maybe<T>::doOnComplete(const CompleteFunction& onComplete)
 template	<typename T>
 RxCW::Maybe<T>		RxCW::Maybe<T>::doOnTerminate(const CompleteFunction& onTerminate)
 {
+	return Maybe<T>(_observable->tap(
 		[](T)
 		{
 		},
@@ -170,6 +171,7 @@ RxCW::Maybe<T>		RxCW::Maybe<T>::doOnTerminate(const CompleteFunction& onTerminat
 		{
 			onTerminate();
 		}
+	));
 }
 
 template	<typename T>
@@ -187,7 +189,7 @@ RxCW::Maybe<T>		RxCW::Maybe<T>::switchIfEmpty(Maybe<T>& other)
 template	<typename T>
 RxCW::Single<T>		RxCW::Maybe<T>::toSingle()
 {
-	return Single<T>(_observable->switch_if_empty(*Single<T>.error(std::make_exception_ptr(std::logic_error("empty Single")))._observable));
+	return Single<T>(_observable->switch_if_empty(*Single<T>::error(std::make_exception_ptr(std::logic_error("empty Single")))._observable));
 }
 
 template	<typename T>
