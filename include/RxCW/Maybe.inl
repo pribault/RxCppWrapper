@@ -75,9 +75,6 @@ RxCW::Maybe<T>	RxCW::Maybe<T>::create(const Handler& handler)
 				throw std::runtime_error("Maybe doesn't accept multiple values. Use Observable instead");
 			gotValue = true;
 			subscriber.on_next(value);
-		},
-			[subscriber]()
-		{
 			subscriber.on_completed();
 		},
 			[subscriber](std::exception_ptr error)
