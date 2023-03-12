@@ -63,17 +63,12 @@ RxCW::Maybe<T>::~Maybe(void)
 template	<typename T>
 RxCW::Maybe<T>	RxCW::Maybe<T>::create(const Handler& handler)
 {
-	bool	gotValue = false;
-
 	return Maybe<T>(rxcpp::observable<>::create<T>(
-		[handler, gotValue](rxcpp::subscriber<T> subscriber)
+		[handler](rxcpp::subscriber<T> subscriber)
 	{
 		handler(
-			[subscriber, gotValue](T value)
+			[subscriber](T value)
 		{
-			if (gotValue)
-				throw std::runtime_error("Maybe doesn't accept multiple values. Use Observable instead");
-			gotValue = true;
 			subscriber.on_next(value);
 			subscriber.on_completed();
 		},
