@@ -69,7 +69,7 @@ int		main(int argc, char **argv)
 		});
 	Single<int>::just(42)
 		.map<float>([](int value) {
-			return 66.6666;
+			return 66.6666f;
 		})
 		.flatMap<int>([](float value) {
 			return Single<int>::just(-12);
