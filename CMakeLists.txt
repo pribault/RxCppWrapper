@@ -44,6 +44,7 @@ endif()
 set_target_properties(RxCW
 	PROPERTIES
 	RUNTIME_OUTPUT_DIRECTORY ${RXCW_OUTPUT_DIR}
+	CXX_STANDARD 17
 )
 
 if(UNIX)
