@@ -28,6 +28,11 @@ find_package(rxcpp CONFIG REQUIRED)
 
 add_executable(example_Completable ${SOURCES})
 
+set_target_properties(example_Completable
+	PROPERTIES
+	CXX_STANDARD 17
+)
+
 if(UNIX)
 	target_link_libraries(example_Completable PRIVATE rxcpp RxCW pthread)
 else()

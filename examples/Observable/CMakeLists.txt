@@ -28,6 +28,11 @@ find_package(rxcpp CONFIG REQUIRED)
 
 add_executable(example_Observable ${SOURCES})
 
+set_target_properties(example_Observable
+	PROPERTIES
+	CXX_STANDARD 17
+)
+
 if(UNIX)
 	target_link_libraries(example_Observable PRIVATE rxcpp RxCW pthread)
 else()
