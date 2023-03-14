@@ -99,9 +99,9 @@ RxCW::Maybe<T>	RxCW::Maybe<T>::just(const T& value)
 }
 
 template	<typename T>
-RxCW::Maybe<T>	RxCW::Maybe<T>::error(std::exception_ptr e)
+RxCW::Maybe<T>	RxCW::Maybe<T>::error(std::exception_ptr error)
 {
-	return Maybe<T>(rxcpp::observable<>::error<T>(e));
+	return Maybe<T>(rxcpp::observable<>::error<T>(error));
 }
 
 template	<typename T>

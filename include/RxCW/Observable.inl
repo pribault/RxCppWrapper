@@ -116,9 +116,9 @@ RxCW::Observable<T>	RxCW::Observable<T>::just(const T& value)
 }
 
 template	<typename T>
-RxCW::Observable<T>	RxCW::Observable<T>::error(std::exception_ptr e)
+RxCW::Observable<T>	RxCW::Observable<T>::error(std::exception_ptr error)
 {
-	return Observable<T>(rxcpp::observable<>::error<T>(e));
+	return Observable<T>(rxcpp::observable<>::error<T>(error));
 }
 
 template	<typename T>
