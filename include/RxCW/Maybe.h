@@ -153,7 +153,7 @@ namespace	RxCW
 			 * @param error The error as an exception pointer.
 			 * @return Maybe The resulting Maybe.
 			 */
-			static Maybe<T>	error(std::exception_ptr e);
+			static Maybe<T>	error(std::exception_ptr error);
 
 			/**
 			 * @brief Create a Maybe with no value.
@@ -172,7 +172,7 @@ namespace	RxCW
 			/**
 			 * @brief Calls the given function on this Maybe success with the Maybe value.
 			 * 
-			 * @param onError The function to call.
+			 * @param onSuccess The function to call.
 			 * @return Maybe The resulting Maybe.
 			 */
 			Maybe<T>		doOnSuccess(const SuccessFunction& onSuccess);
