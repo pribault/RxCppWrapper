@@ -153,7 +153,7 @@ namespace	RxCW
 			 * @param error The error as an exception pointer.
 			 * @return Single The resulting Single.
 			 */
-			static Single<T>	error(std::exception_ptr e);
+			static Single<T>	error(std::exception_ptr error);
 
 			/**
 			 * @brief Create a Single that never completes nor fails.
@@ -165,7 +165,7 @@ namespace	RxCW
 			/**
 			 * @brief Calls the given function on this Single success with the Single value.
 			 * 
-			 * @param onError The function to call.
+			 * @param onSuccess The function to call.
 			 * @return Single The resulting Single.
 			 */
 			Single<T>		doOnSuccess(const SuccessFunction& onSuccess);

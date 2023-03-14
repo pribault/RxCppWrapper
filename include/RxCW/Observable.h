@@ -165,7 +165,7 @@ namespace	RxCW
 			 * @param error The error as an exception pointer.
 			 * @return Observable The resulting Observable.
 			 */
-			static Observable<T>	error(std::exception_ptr e);
+			static Observable<T>	error(std::exception_ptr error);
 
 			/**
 			 * @brief Create an Observable with a range of values.
@@ -264,7 +264,7 @@ namespace	RxCW
 			/**
 			 * @brief Calls the given function for each Observable value.
 			 * 
-			 * @param onError The function to call.
+			 * @param onSuccess The function to call.
 			 * @return Observable The resulting Observable.
 			 */
 			Observable<T>		doOnSuccess(const SuccessFunction& onSuccess);
