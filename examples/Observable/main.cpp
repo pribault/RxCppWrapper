@@ -62,7 +62,7 @@ int		main(int argc, char **argv)
 {
 	Observable<long>::interval(std::chrono::steady_clock::now(), std::chrono::seconds(1))
 		.take(3)
-		.subscribe([](int value) {
+		.subscribe([](long value) {
 			log("value: " + std::to_string(value));
 		}, [](const std::exception_ptr& e) {
 			log("error !");
@@ -75,10 +75,10 @@ int		main(int argc, char **argv)
 		completeFunction();
 		})
 		.map<float>([](int value) {
-			return value + 100;
+			return value + 100.0f;
 		})
 		.subscribeOn(rxcpp::synchronize_new_thread())
-		.subscribe([](int value) {
+		.subscribe([](float value) {
 			log("value: " + std::to_string(value));
 		}, [](const std::exception_ptr& e) {
 			log("error !");
