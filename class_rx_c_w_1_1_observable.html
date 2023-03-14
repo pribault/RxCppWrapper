@@ -199,9 +199,9 @@ Static Public Member Functions</h2></td></tr>
 <tr class="memitem:aa53fc1f57cd0b535fcf20447d898b59c"><td class="memItemLeft" align="right" valign="top">static <a class="el" href="class_rx_c_w_1_1_observable.html">Observable</a>&lt; T &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_rx_c_w_1_1_observable.html#aa53fc1f57cd0b535fcf20447d898b59c">just</a> (const T &amp;value)</td></tr>
 <tr class="memdesc:aa53fc1f57cd0b535fcf20447d898b59c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Create an <a class="el" href="class_rx_c_w_1_1_observable.html" title="Represents an asynchronous object that can handle a flow of data, complete or fail.">Observable</a> with the given value.  <a href="class_rx_c_w_1_1_observable.html#aa53fc1f57cd0b535fcf20447d898b59c">More...</a><br /></td></tr>
 <tr class="separator:aa53fc1f57cd0b535fcf20447d898b59c"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a1a7c4b4a6f7a5192dd888b9ae95bd5bc"><td class="memItemLeft" align="right" valign="top">static <a class="el" href="class_rx_c_w_1_1_observable.html">Observable</a>&lt; T &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_rx_c_w_1_1_observable.html#a1a7c4b4a6f7a5192dd888b9ae95bd5bc">error</a> (std::exception_ptr e)</td></tr>
-<tr class="memdesc:a1a7c4b4a6f7a5192dd888b9ae95bd5bc"><td class="mdescLeft">&#160;</td><td class="mdescRight">Create an <a class="el" href="class_rx_c_w_1_1_observable.html" title="Represents an asynchronous object that can handle a flow of data, complete or fail.">Observable</a> instance failing instantly with the given error when subscribed to.  <a href="class_rx_c_w_1_1_observable.html#a1a7c4b4a6f7a5192dd888b9ae95bd5bc">More...</a><br /></td></tr>
-<tr class="separator:a1a7c4b4a6f7a5192dd888b9ae95bd5bc"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:abbf7aa6c64f01a490348c722ebf18225"><td class="memItemLeft" align="right" valign="top">static <a class="el" href="class_rx_c_w_1_1_observable.html">Observable</a>&lt; T &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_rx_c_w_1_1_observable.html#abbf7aa6c64f01a490348c722ebf18225">error</a> (std::exception_ptr error)</td></tr>
+<tr class="memdesc:abbf7aa6c64f01a490348c722ebf18225"><td class="mdescLeft">&#160;</td><td class="mdescRight">Create an <a class="el" href="class_rx_c_w_1_1_observable.html" title="Represents an asynchronous object that can handle a flow of data, complete or fail.">Observable</a> instance failing instantly with the given error when subscribed to.  <a href="class_rx_c_w_1_1_observable.html#abbf7aa6c64f01a490348c722ebf18225">More...</a><br /></td></tr>
+<tr class="separator:abbf7aa6c64f01a490348c722ebf18225"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a9c4cf10608c5c3b4168cd5980a38926b"><td class="memItemLeft" align="right" valign="top">static <a class="el" href="class_rx_c_w_1_1_observable.html">Observable</a>&lt; T &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_rx_c_w_1_1_observable.html#a9c4cf10608c5c3b4168cd5980a38926b">range</a> (T start, T end, std::ptrdiff_t step=1)</td></tr>
 <tr class="memdesc:a9c4cf10608c5c3b4168cd5980a38926b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Create an <a class="el" href="class_rx_c_w_1_1_observable.html" title="Represents an asynchronous object that can handle a flow of data, complete or fail.">Observable</a> with a range of values.  <a href="class_rx_c_w_1_1_observable.html#a9c4cf10608c5c3b4168cd5980a38926b">More...</a><br /></td></tr>
 <tr class="separator:a9c4cf10608c5c3b4168cd5980a38926b"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -433,7 +433,7 @@ template&lt;typename T &gt; </div>
 <p>Calls the given function for each <a class="el" href="class_rx_c_w_1_1_observable.html" title="Represents an asynchronous object that can handle a flow of data, complete or fail.">Observable</a> value. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">onError</td><td>The function to call. </td></tr>
+    <tr><td class="paramname">onSuccess</td><td>The function to call. </td></tr>
   </table>
   </dd>
 </dl>
@@ -558,8 +558,8 @@ template&lt;typename T &gt; </div>
 
 </div>
 </div>
-<a id="a1a7c4b4a6f7a5192dd888b9ae95bd5bc"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a1a7c4b4a6f7a5192dd888b9ae95bd5bc">&#9670;&nbsp;</a></span>error()</h2>
+<a id="abbf7aa6c64f01a490348c722ebf18225"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#abbf7aa6c64f01a490348c722ebf18225">&#9670;&nbsp;</a></span>error()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -573,7 +573,7 @@ template&lt;typename T &gt; </div>
           <td class="memname">static <a class="el" href="class_rx_c_w_1_1_observable.html">Observable</a>&lt;T&gt; <a class="el" href="class_rx_c_w_1_1_observable.html">RxCW::Observable</a>&lt; T &gt;::error </td>
           <td>(</td>
           <td class="paramtype">std::exception_ptr&#160;</td>
-          <td class="paramname"><em>e</em></td><td>)</td>
+          <td class="paramname"><em>error</em></td><td>)</td>
           <td></td>
         </tr>
       </table>

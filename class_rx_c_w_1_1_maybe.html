@@ -181,9 +181,9 @@ Static Public Member Functions</h2></td></tr>
 <tr class="memitem:ab8ab18febf1b475f6b1fc9434c5812cb"><td class="memItemLeft" align="right" valign="top">static <a class="el" href="class_rx_c_w_1_1_maybe.html">Maybe</a>&lt; T &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_rx_c_w_1_1_maybe.html#ab8ab18febf1b475f6b1fc9434c5812cb">just</a> (const T &amp;value)</td></tr>
 <tr class="memdesc:ab8ab18febf1b475f6b1fc9434c5812cb"><td class="mdescLeft">&#160;</td><td class="mdescRight">Create a <a class="el" href="class_rx_c_w_1_1_maybe.html" title="Represents an asynchronous object that can, fail, complete with a value or complete with no value at ...">Maybe</a> with the given value.  <a href="class_rx_c_w_1_1_maybe.html#ab8ab18febf1b475f6b1fc9434c5812cb">More...</a><br /></td></tr>
 <tr class="separator:ab8ab18febf1b475f6b1fc9434c5812cb"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a382ef16ccd3f64e7bcbb8d4ebcdb8ed7"><td class="memItemLeft" align="right" valign="top">static <a class="el" href="class_rx_c_w_1_1_maybe.html">Maybe</a>&lt; T &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_rx_c_w_1_1_maybe.html#a382ef16ccd3f64e7bcbb8d4ebcdb8ed7">error</a> (std::exception_ptr e)</td></tr>
-<tr class="memdesc:a382ef16ccd3f64e7bcbb8d4ebcdb8ed7"><td class="mdescLeft">&#160;</td><td class="mdescRight">Create a <a class="el" href="class_rx_c_w_1_1_maybe.html" title="Represents an asynchronous object that can, fail, complete with a value or complete with no value at ...">Maybe</a> instance failing instantly with the given error when subscribed to.  <a href="class_rx_c_w_1_1_maybe.html#a382ef16ccd3f64e7bcbb8d4ebcdb8ed7">More...</a><br /></td></tr>
-<tr class="separator:a382ef16ccd3f64e7bcbb8d4ebcdb8ed7"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a1d1e87df72b64ac042f25dcbbec0d2fe"><td class="memItemLeft" align="right" valign="top">static <a class="el" href="class_rx_c_w_1_1_maybe.html">Maybe</a>&lt; T &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_rx_c_w_1_1_maybe.html#a1d1e87df72b64ac042f25dcbbec0d2fe">error</a> (std::exception_ptr error)</td></tr>
+<tr class="memdesc:a1d1e87df72b64ac042f25dcbbec0d2fe"><td class="mdescLeft">&#160;</td><td class="mdescRight">Create a <a class="el" href="class_rx_c_w_1_1_maybe.html" title="Represents an asynchronous object that can, fail, complete with a value or complete with no value at ...">Maybe</a> instance failing instantly with the given error when subscribed to.  <a href="class_rx_c_w_1_1_maybe.html#a1d1e87df72b64ac042f25dcbbec0d2fe">More...</a><br /></td></tr>
+<tr class="separator:a1d1e87df72b64ac042f25dcbbec0d2fe"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a5054a01448034873cbade3be4369f1ad"><td class="memItemLeft" align="right" valign="top">static <a class="el" href="class_rx_c_w_1_1_maybe.html">Maybe</a>&lt; T &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_rx_c_w_1_1_maybe.html#a5054a01448034873cbade3be4369f1ad">empty</a> ()</td></tr>
 <tr class="memdesc:a5054a01448034873cbade3be4369f1ad"><td class="mdescLeft">&#160;</td><td class="mdescRight">Create a <a class="el" href="class_rx_c_w_1_1_maybe.html" title="Represents an asynchronous object that can, fail, complete with a value or complete with no value at ...">Maybe</a> with no value.  <a href="class_rx_c_w_1_1_maybe.html#a5054a01448034873cbade3be4369f1ad">More...</a><br /></td></tr>
 <tr class="separator:a5054a01448034873cbade3be4369f1ad"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -420,7 +420,7 @@ template&lt;typename T &gt; </div>
 <p>Calls the given function on this <a class="el" href="class_rx_c_w_1_1_maybe.html" title="Represents an asynchronous object that can, fail, complete with a value or complete with no value at ...">Maybe</a> success with the <a class="el" href="class_rx_c_w_1_1_maybe.html" title="Represents an asynchronous object that can, fail, complete with a value or complete with no value at ...">Maybe</a> value. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">onError</td><td>The function to call. </td></tr>
+    <tr><td class="paramname">onSuccess</td><td>The function to call. </td></tr>
   </table>
   </dd>
 </dl>
@@ -487,8 +487,8 @@ template&lt;typename T &gt; </div>
 
 </div>
 </div>
-<a id="a382ef16ccd3f64e7bcbb8d4ebcdb8ed7"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a382ef16ccd3f64e7bcbb8d4ebcdb8ed7">&#9670;&nbsp;</a></span>error()</h2>
+<a id="a1d1e87df72b64ac042f25dcbbec0d2fe"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a1d1e87df72b64ac042f25dcbbec0d2fe">&#9670;&nbsp;</a></span>error()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -502,7 +502,7 @@ template&lt;typename T &gt; </div>
           <td class="memname">static <a class="el" href="class_rx_c_w_1_1_maybe.html">Maybe</a>&lt;T&gt; <a class="el" href="class_rx_c_w_1_1_maybe.html">RxCW::Maybe</a>&lt; T &gt;::error </td>
           <td>(</td>
           <td class="paramtype">std::exception_ptr&#160;</td>
-          <td class="paramname"><em>e</em></td><td>)</td>
+          <td class="paramname"><em>error</em></td><td>)</td>
           <td></td>
         </tr>
       </table>

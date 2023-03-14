@@ -179,9 +179,9 @@ Static Public Member Functions</h2></td></tr>
 <tr class="memitem:ae3ed17c4a447e25cdf952ea2662adcda"><td class="memItemLeft" align="right" valign="top">static <a class="el" href="class_rx_c_w_1_1_single.html">Single</a>&lt; T &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_rx_c_w_1_1_single.html#ae3ed17c4a447e25cdf952ea2662adcda">just</a> (const T &amp;value)</td></tr>
 <tr class="memdesc:ae3ed17c4a447e25cdf952ea2662adcda"><td class="mdescLeft">&#160;</td><td class="mdescRight">Create a <a class="el" href="class_rx_c_w_1_1_single.html" title="Represents an asynchronous object that can fail or complete with a value.">Single</a> with the given value.  <a href="class_rx_c_w_1_1_single.html#ae3ed17c4a447e25cdf952ea2662adcda">More...</a><br /></td></tr>
 <tr class="separator:ae3ed17c4a447e25cdf952ea2662adcda"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a101b9926bbcc7b9d5c978112295bc64d"><td class="memItemLeft" align="right" valign="top">static <a class="el" href="class_rx_c_w_1_1_single.html">Single</a>&lt; T &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_rx_c_w_1_1_single.html#a101b9926bbcc7b9d5c978112295bc64d">error</a> (std::exception_ptr e)</td></tr>
-<tr class="memdesc:a101b9926bbcc7b9d5c978112295bc64d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Create a <a class="el" href="class_rx_c_w_1_1_single.html" title="Represents an asynchronous object that can fail or complete with a value.">Single</a> instance failing instantly with the given error when subscribed to.  <a href="class_rx_c_w_1_1_single.html#a101b9926bbcc7b9d5c978112295bc64d">More...</a><br /></td></tr>
-<tr class="separator:a101b9926bbcc7b9d5c978112295bc64d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a2814cadb02e4c8ab8fae7a6a1ecf2a56"><td class="memItemLeft" align="right" valign="top">static <a class="el" href="class_rx_c_w_1_1_single.html">Single</a>&lt; T &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_rx_c_w_1_1_single.html#a2814cadb02e4c8ab8fae7a6a1ecf2a56">error</a> (std::exception_ptr error)</td></tr>
+<tr class="memdesc:a2814cadb02e4c8ab8fae7a6a1ecf2a56"><td class="mdescLeft">&#160;</td><td class="mdescRight">Create a <a class="el" href="class_rx_c_w_1_1_single.html" title="Represents an asynchronous object that can fail or complete with a value.">Single</a> instance failing instantly with the given error when subscribed to.  <a href="class_rx_c_w_1_1_single.html#a2814cadb02e4c8ab8fae7a6a1ecf2a56">More...</a><br /></td></tr>
+<tr class="separator:a2814cadb02e4c8ab8fae7a6a1ecf2a56"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a951703eaa9a8f61cf540312f42d27014"><td class="memItemLeft" align="right" valign="top">static <a class="el" href="class_rx_c_w_1_1_single.html">Single</a>&lt; T &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_rx_c_w_1_1_single.html#a951703eaa9a8f61cf540312f42d27014">never</a> ()</td></tr>
 <tr class="memdesc:a951703eaa9a8f61cf540312f42d27014"><td class="mdescLeft">&#160;</td><td class="mdescRight">Create a <a class="el" href="class_rx_c_w_1_1_single.html" title="Represents an asynchronous object that can fail or complete with a value.">Single</a> that never completes nor fails.  <a href="class_rx_c_w_1_1_single.html#a951703eaa9a8f61cf540312f42d27014">More...</a><br /></td></tr>
 <tr class="separator:a951703eaa9a8f61cf540312f42d27014"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -415,7 +415,7 @@ template&lt;typename T &gt; </div>
 <p>Calls the given function on this <a class="el" href="class_rx_c_w_1_1_single.html" title="Represents an asynchronous object that can fail or complete with a value.">Single</a> success with the <a class="el" href="class_rx_c_w_1_1_single.html" title="Represents an asynchronous object that can fail or complete with a value.">Single</a> value. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">onError</td><td>The function to call. </td></tr>
+    <tr><td class="paramname">onSuccess</td><td>The function to call. </td></tr>
   </table>
   </dd>
 </dl>
@@ -452,8 +452,8 @@ template&lt;typename T &gt; </div>
 
 </div>
 </div>
-<a id="a101b9926bbcc7b9d5c978112295bc64d"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a101b9926bbcc7b9d5c978112295bc64d">&#9670;&nbsp;</a></span>error()</h2>
+<a id="a2814cadb02e4c8ab8fae7a6a1ecf2a56"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a2814cadb02e4c8ab8fae7a6a1ecf2a56">&#9670;&nbsp;</a></span>error()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -467,7 +467,7 @@ template&lt;typename T &gt; </div>
           <td class="memname">static <a class="el" href="class_rx_c_w_1_1_single.html">Single</a>&lt;T&gt; <a class="el" href="class_rx_c_w_1_1_single.html">RxCW::Single</a>&lt; T &gt;::error </td>
           <td>(</td>
           <td class="paramtype">std::exception_ptr&#160;</td>
-          <td class="paramname"><em>e</em></td><td>)</td>
+          <td class="paramname"><em>error</em></td><td>)</td>
           <td></td>
         </tr>
       </table>
