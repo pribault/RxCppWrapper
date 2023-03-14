@@ -1,5 +1,5 @@
 var searchData=
 [
-  ['last_142',['last',['../class_rx_c_w_1_1_observable.html#a194380a4e3a6505e7b2a04f8d36c4f29',1,'RxCW::Observable']]],
-  ['lastorerror_143',['lastOrError',['../class_rx_c_w_1_1_observable.html#a23f1e8a631cda7c02e20b176573da716',1,'RxCW::Observable']]]
+  ['last_143',['last',['../class_rx_c_w_1_1_observable.html#ae6b2bcb8d3ed764e6beef88aaf5b641d',1,'RxCW::Observable']]],
+  ['lastorerror_144',['lastOrError',['../class_rx_c_w_1_1_observable.html#a6a73265a4bc06f2028b13236ea92616b',1,'RxCW::Observable']]]
 ];
