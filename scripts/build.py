@@ -4,25 +4,24 @@ import getopt
 import os
 import sys
 from env import *
+import time
 
 allowedBuildTypes = ["Release", "Debug"]
 
 # print usage
 def printUsage():
-	print("cmake.py [-h] [--help] [-d] [--dynamic] [-s] [--static] [-b <Debug|Release>] [--buildType <Debug|Release>]")
+	print("build.py [-h] [--help] [-b <Debug|Release>] [--buildType <Debug|Release>]")
 	print("  -h or --help: dysplay help and quit")
-	print("  -d or --dynamic: enable dynamic linking (default)")
-	print("  -s or --static: disable dynamic linking")
 	print("  -b or --buildType: set build type ('Release' or 'Debug')")
 
 if __name__ == '__main__':
 
 	# define default variables
-	dynamicLinking = True
 	buildType = "Release"
+	osParams = ""
 
 	# retrieve arguments
-	opts, args = getopt.getopt(sys.argv[1:], "hdsb:", ["help", "dynamic", "static", "buildType="])
+	opts, args = getopt.getopt(sys.argv[1:], "hb:", ["help", "buildType="])
 
 	# ensure all arguments are parsed
 	if len(args) != 0:
@@ -36,10 +35,6 @@ if __name__ == '__main__':
 		if opt in ("-h", "--help"):
 			printUsage()
 			exit(0)
-		elif opt in ("-d", "--dynamic"):
-			dynamicLinking = True
-		elif opt in ("-s", "--static"):
-			dynamicLinking = False
 		# build type
 		if opt in ("-b", "--buildType"):
 			if not arg in allowedBuildTypes:
@@ -48,11 +43,18 @@ if __name__ == '__main__':
 				exit(1)
 			buildType = arg
 
-	# run cmake command
-	print("starting cmake")
-	result = os.system("cmake %s -DENABLE_DYNAMIC_LINK=%s -DCMAKE_TOOLCHAIN_FILE=%s/scripts/buildsystems/vcpkg.cmake -DCMAKE_BUILD_TYPE=%s -B %s" % (rootDir, str(dynamicLinking), vcpkgPath, buildType, buildDir))
+	if sys.platform.startswith('win'):
+		nbCpu = os.cpu_count()
+		print("building over %s thread(s)" % nbCpu)
+		osParams = "-- /p:CL_MPcount=%s" % nbCpu
+
+	# run build command
+	print("starting '%s' build" % buildType)
+	start = time.time()
+	result = os.system("cmake --build %s --config %s --parallel %s" % (buildDir, buildType, osParams))
+	end = time.time()
 	if result:
-		print("Cmake KO!")
+		print("Build KO!")
 	else:
-		print("Cmake OK!")
+		print("Build OK! took %s seconds" % (end - start))
 	sys.exit(1 if result > 0 else 0)

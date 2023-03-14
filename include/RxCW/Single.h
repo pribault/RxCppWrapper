@@ -38,7 +38,7 @@
 */
 
 // RxCpp
-#include <rx-observable.hpp>
+#include <rx.hpp>
 
 /*
 ****************

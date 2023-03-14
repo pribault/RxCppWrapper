@@ -47,7 +47,7 @@
 */
 
 template	<typename T>
-RxCW::Single<T>	RxCW::Completable::andThen(RxCW::Single<T>& other)
+RxCW::Single<T>	RxCW::Completable::andThen(const RxCW::Single<T>& other)
 {
 	return RxCW::Single<T>(_observable->flat_map([other](int) {
 		return *other._observable;
@@ -55,7 +55,7 @@ RxCW::Single<T>	RxCW::Completable::andThen(RxCW::Single<T>& other)
 }
 
 template	<typename T>
-RxCW::Maybe<T>	RxCW::Completable::andThen(RxCW::Maybe<T>& other)
+RxCW::Maybe<T>	RxCW::Completable::andThen(const RxCW::Maybe<T>& other)
 {
 	return RxCW::Maybe<T>(_observable->flat_map([other](int) {
 		return *other._observable;
@@ -63,7 +63,7 @@ RxCW::Maybe<T>	RxCW::Completable::andThen(RxCW::Maybe<T>& other)
 }
 
 template	<typename T>
-RxCW::Observable<T>	RxCW::Completable::andThen(RxCW::Observable<T>& other)
+RxCW::Observable<T>	RxCW::Completable::andThen(const RxCW::Observable<T>& other)
 {
 	return RxCW::Observable<T>(_observable->flat_map([other](int) {
 		return *other._observable;

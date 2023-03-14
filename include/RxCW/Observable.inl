@@ -238,6 +238,7 @@ RxCW::Observable<T>		RxCW::Observable<T>::doOnComplete(const CompleteFunction& o
 template	<typename T>
 RxCW::Observable<T>		RxCW::Observable<T>::doOnTerminate(const CompleteFunction& onTerminate)
 {
+	return Observable<T>(_observable->tap(
 		[](T)
 		{
 		},
@@ -249,6 +250,7 @@ RxCW::Observable<T>		RxCW::Observable<T>::doOnTerminate(const CompleteFunction& 
 		{
 			onTerminate();
 		}
+	));
 }
 
 template	<typename T>

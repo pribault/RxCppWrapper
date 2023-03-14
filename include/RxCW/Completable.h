@@ -38,7 +38,23 @@
 */
 
 // RxCpp
-#include <rx-observable.hpp>
+#include <rx.hpp>
+
+/*
+****************
+** class used **
+****************
+*/
+
+namespace	RxCW
+{
+	template	<typename T>
+	class		Observable;
+	template	<typename T>
+	class		Maybe;
+	template	<typename T>
+	class		Single;
+}
 
 /*
 **********************
@@ -148,7 +164,7 @@ namespace	RxCW
 			 * @param other The Completable to run after this one.
 			 * @return Completable The resulting Completable.
 			 */
-			Completable		andThen(Completable& other);
+			Completable		andThen(const Completable& other);
 
 			/**
 			 * @brief Returns a Single that will run this Completable first, and then the given Single.
@@ -157,7 +173,7 @@ namespace	RxCW
 			 * @return Single The resulting Single.
 			 */
 			template	<typename T>
-			Single<T>	andThen(Single<T>& other);
+			Single<T>	andThen(const Single<T>& other);
 
 			/**
 			 * @brief Returns a Maybe that will run this Completable first, and then the given Maybe.
@@ -166,7 +182,7 @@ namespace	RxCW
 			 * @return Maybe The resulting Maybe.
 			 */
 			template	<typename T>
-			Maybe<T>	andThen(Maybe<T>& other);
+			Maybe<T>	andThen(const Maybe<T>& other);
 
 			/**
 			 * @brief Returns a Observable that will run this Completable first, and then the given Observable.
@@ -175,7 +191,7 @@ namespace	RxCW
 			 * @return Observable The resulting Observable.
 			 */
 			template	<typename T>
-			Observable<T>	andThen(Observable<T>& other);
+			Observable<T>	andThen(const Observable<T>& other);
 
 			/**
 			 * @brief Merge all Completables into one, those Completables will be subscribed at the same time and the resulting Completable will only complete after all the merged Completables.

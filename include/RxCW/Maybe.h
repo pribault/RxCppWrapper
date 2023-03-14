@@ -38,7 +38,7 @@
 */
 
 // RxCpp
-#include <rx-observable.hpp>
+#include <rx.hpp>
 
 /*
 ****************
@@ -95,22 +95,22 @@ namespace	RxCW
 			/**
 			 * @brief Function that can be called when a Maybe completes with a value.
 			 */
-			typedef std::function<void(T)>													SuccessFunction;
+			typedef std::function<void(T)>									SuccessFunction;
 
 			/**
 			 * @brief Function that can be called when a Maybe fails.
 			 */
-			typedef std::function<void(std::exception_ptr)>									ErrorFunction;
+			typedef std::function<void(std::exception_ptr)>					ErrorFunction;
 
 			/**
 			 * @brief Function that can be called when a Maybe completes.
 			 */
-			typedef std::function<void()>													CompleteFunction;
+			typedef std::function<void()>									CompleteFunction;
 
 			/**
 			 * @brief Function that can be used to construct a new Maybe. It takes three other functions to give the Maybe a value, complete it or make it fail.
 			 */
-			typedef std::function<void(SuccessFunction, CompleteFunction, ErrorFunction)>	Handler;
+			typedef std::function<void(SuccessFunction, ErrorFunction)>		Handler;
 
 			/*
 			*************

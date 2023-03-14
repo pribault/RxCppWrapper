@@ -7,11 +7,15 @@ if(NOT DEFINED ENABLE_DYNAMIC_LINK)
 	set(ENABLE_DYNAMIC_LINK False)
 endif()
 
+if(ENABLE_DYNAMIC_LINK)
+	if(MSVC)
+		set(CMAKE_WINDOWS_EXPORT_ALL_SYMBOLS TRUE)
+		set(BUILD_SHARED_LIBS TRUE)
+	endif()
+endif()
+
 # Load common cmake
 include(${PROJECT_SOURCE_DIR}/cmake/RxCWCommon.cmake)
-
-# Set environment
-rxcw_set_env()
 
 add_subdirectory(examples)
 
@@ -40,8 +44,13 @@ endif()
 set_target_properties(RxCW
 	PROPERTIES
 	RUNTIME_OUTPUT_DIRECTORY ${RXCW_OUTPUT_DIR}
+	CXX_STANDARD 17
 )
 
-target_link_libraries(RxCW PRIVATE rxcpp)
+if(UNIX)
+	target_link_libraries(RxCW PRIVATE rxcpp pthread)
+else()
+	target_link_libraries(RxCW PRIVATE rxcpp)
+endif()
 
 target_compile_features(RxCW PRIVATE cxx_std_17)
